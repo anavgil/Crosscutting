@@ -10,7 +10,10 @@ public static class ServiceCollectionExtensions
 
         services.ConfigureOptions<SerilogOptionsSettingsSetup>();
 
+        services.AddHttpClient();
         services.AddSerilog();
+
+
         return services;
     }
 

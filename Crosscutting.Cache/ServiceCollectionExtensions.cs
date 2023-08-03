@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Croscutting.Common.Configurations.Redis;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using StackExchange.Redis;
 
 namespace Crosscutting.Cache
@@ -12,8 +14,24 @@ namespace Crosscutting.Cache
         //    Password = "y3lMlNq8Ih4V8XvyShweljWjpvDkavKRdAzCaJsfqoQ="
         //};
 
-        public static IServiceCollection AddCache(this IServiceCollection services)
+        
+
+        public static IServiceCollection AddCache(this IServiceCollection services, IOptions<RedisSettingsBinder> settings)
         {
+            services.ConfigureOptions<RedisOptionsSettingsSetup>();
+
+            
+            var redisSettings = settings.Value;
+
+            if(redisSettings.UseRedis)
+            {
+
+            }
+            else
+            {
+
+            }
+
 
             services.AddStackExchangeRedisCache(options =>
             {

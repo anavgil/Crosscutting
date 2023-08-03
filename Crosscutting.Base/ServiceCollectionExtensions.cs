@@ -7,15 +7,11 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureBase(this IServiceCollection services)
     {
-
         services.ConfigureOptions<SerilogOptionsSettingsSetup>();
 
         services.AddHttpClient();
         services.AddSerilog();
 
-
         return services;
     }
-
-
 }

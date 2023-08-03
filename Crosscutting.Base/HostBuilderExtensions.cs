@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Enrichers.Span;
-using Serilog.Events;
 using Serilog.Formatting.Json;
 
 namespace Crosscutting.Base;
@@ -14,14 +12,11 @@ public static class HostBuilderExtensions
         {
             logger
                 .Enrich.FromLogContext()
-                .Enrich.WithSpan()
-                ;
+                .Enrich.WithSpan();
 
             if (context.HostingEnvironment.IsDevelopment())
             {
-                logger.WriteTo.Console(
-                    outputTemplate:
-                    "{Timestamp:yyyy-MM-dd HH:mm:ss} {TraceId} {Level:u3} {Message}{NewLine}{Exception}");
+                logger.WriteTo.Console(outputTemplate: "{Timestamp:yyyy-MM-dd HH:mm:ss} {TraceId} {Level:u3} {Message}{NewLine}{Exception}");
             }
             else
             {

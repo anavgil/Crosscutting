@@ -10,7 +10,9 @@ public static class HostBuilderExtensions
     {
         return builder.UseSerilog((context, logger) =>
         {
-            logger.Enrich.FromLogContext().Enrich.WithSpan();
+            logger
+                .Enrich.FromLogContext()
+                .Enrich.WithSpan();
 
             if (context.HostingEnvironment.IsDevelopment())
             {

@@ -1,4 +1,6 @@
 ﻿using Croscutting.Common.Configurations.Redis;
+using Crosscutting.Cache.Abstraction;
+using Crosscutting.Cache.Implementation;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
@@ -10,9 +12,6 @@ namespace Crosscutting.Cache
     {
         public static IServiceCollection AddCache(this IServiceCollection services, IOptions<RedisSettingsBinder> settings)
         {
-            services.ConfigureOptions<RedisOptionsSettingsSetup>();
-
-            
             var redisSettings = settings.Value;
 
             if(redisSettings.UseRedis)
@@ -39,14 +38,7 @@ namespace Crosscutting.Cache
             }
 
 
-            services.AddStackExchangeRedisCache(options =>
-            {
-                options.ConfigurationOptions = new ConfigurationOptions()
-                {
-
-                };
-            });
-
+            services.AddScoped<ICacheService, CacheService>();
 
             return services;
         }

@@ -3,7 +3,7 @@ using Croscutting.Common.Configurations.Serilog;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 
-namespace Crosscutting.Base;
+namespace Crosscutting.Base.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection ConfigureBase(this IServiceCollection services)

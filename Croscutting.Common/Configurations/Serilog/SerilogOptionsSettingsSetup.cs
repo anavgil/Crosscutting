@@ -5,7 +5,7 @@ namespace Croscutting.Common.Configurations.Serilog;
 
 public class SerilogOptionsSettingsSetup : IConfigureOptions<SerilogSettingsBinder>
 {
-    private const string _sectionName="Serilog";
+    private const string _sectionName = "Serilog";
     private readonly IConfiguration _configuration;
 
     public SerilogOptionsSettingsSetup(IConfiguration configuration)

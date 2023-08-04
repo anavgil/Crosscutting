@@ -1,11 +1,9 @@
-﻿using Microsoft.AspNetCore.Builder;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Enrichers.Span;
-using Serilog.Events;
 using Serilog.Formatting.Json;
 
-namespace Crosscutting.Base;
+namespace Crosscutting.Base.DependencyInjection;
 public static class HostBuilderExtensions
 {
     public static IHostBuilder UseLogging(this IHostBuilder builder)

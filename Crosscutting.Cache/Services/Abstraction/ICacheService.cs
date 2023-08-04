@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Caching.Distributed;
 
-namespace Crosscutting.Cache.Abstraction;
+namespace Crosscutting.Cache.Services.Abstraction;
 
 public interface ICacheService
 {

@@ -1,20 +1,38 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using Croscutting.Common.Configurations.Exception;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 
-namespace Crosscutting.Base;
+namespace Crosscutting.Api;
+
 public class ExceptionHandlerExtensions
 {
+    #region Members
+
     private readonly RequestDelegate _next;
-    public ExceptionHandlerExtensions(RequestDelegate next)
+    private readonly ILogger<ExceptionHandlerExtensions> _logger;
+    private readonly ExceptionSettingsBinder _options;
+
+    #endregion
+
+    #region Constructor
+
+    public ExceptionHandlerExtensions(RequestDelegate next, ILogger<ExceptionHandlerExtensions> logger, IOptions<ExceptionSettingsBinder> options)
     {
         _next = next;
+        _logger = logger;
+        _options = options.Value;
     }
+
+    #endregion
+
+    #region Public Methods
 
     public async Task InvokeAsync(HttpContext context)
     {
         try
         {
-            // Execute next middleware
             await _next(context);
         }
         catch (Exception ex)
@@ -23,18 +41,22 @@ public class ExceptionHandlerExtensions
         }
     }
 
+    #endregion
+
+    #region Private Methods
+
     private Task HandleException(HttpContext context, Exception ex)
     {
         // Handle exception using UseExceptionHandler
         var exceptionHandlerFeature = new ExceptionHandlerFeature()
         {
             Error = ex,
+            Path = _options.RedirectPath
         };
         context.Features.Set<IExceptionHandlerFeature>(exceptionHandlerFeature);
 
-        // Invoque middleware UseExceptionHandler to handle exception
-        context.Request.Path = "/Error"; // Path can be replaced
-
         return _next(context);
     }
+
+    #endregion
 }

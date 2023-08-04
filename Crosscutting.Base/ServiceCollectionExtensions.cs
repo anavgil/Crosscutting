@@ -12,9 +12,6 @@ public static class ServiceCollectionExtensions
         services.AddHttpClient();
         services.AddSerilog();
 
-        // Enable exception handling middleware
-        services.AddScoped<ExceptionHandlerExtensions>();
-
         return services;
     }
 

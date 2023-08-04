@@ -1,9 +1,9 @@
-﻿using Crosscutting.Cache.Abstraction;
-using Crosscutting.Cache.Extensions;
+﻿using Crosscutting.Cache.Extensions;
+using Crosscutting.Cache.Services.Abstraction;
 using Microsoft.Extensions.Caching.Distributed;
 using Microsoft.Extensions.Logging;
 
-namespace Crosscutting.Cache.Implementation;
+namespace Crosscutting.Cache.Services.Implementation;
 
 
 public class CacheService : ICacheService

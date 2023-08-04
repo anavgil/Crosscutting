@@ -3,7 +3,7 @@ using Serilog;
 using Serilog.Enrichers.Span;
 using Serilog.Formatting.Json;
 
-namespace Crosscutting.Base;
+namespace Crosscutting.Base.DependencyInjection;
 public static class HostBuilderExtensions
 {
     public static IHostBuilder UseLogging(this IHostBuilder builder)

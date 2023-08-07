@@ -5,7 +5,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace Crosscutting.Api;
-
 public class ExceptionHandlerExtensions
 {
     #region Members

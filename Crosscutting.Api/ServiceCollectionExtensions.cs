@@ -10,7 +10,7 @@ namespace Crosscutting.Api
         {
             services.ConfigureSettings();
 
-            services.AddAutoMapper(Assembly.GetExecutingAssembly());
+            services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
             return services;
         }

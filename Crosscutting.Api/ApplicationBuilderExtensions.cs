@@ -14,7 +14,6 @@ public static class ApplicationBuilderExtensions
 
         app.UseEndpoints(endpoints =>
         {
-            endpoints.MapControllers();
             endpoints.MapCarter();
         });
 

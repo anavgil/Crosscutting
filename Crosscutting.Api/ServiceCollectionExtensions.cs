@@ -17,6 +17,9 @@ namespace Crosscutting.Api
             services.AddControllers();
             services.AddCarter();
 
+            services.AddHealthChecks();
+            services.AddHealthChecksUI();
+
             return services;
         }
 

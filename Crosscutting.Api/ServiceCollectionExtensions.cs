@@ -1,6 +1,6 @@
-﻿using Croscutting.Common.Configurations.Exception;
+﻿using Carter;
+using Croscutting.Common.Configurations.Exception;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
 
 namespace Crosscutting.Api
 {
@@ -11,6 +11,11 @@ namespace Crosscutting.Api
             services.ConfigureSettings();
 
             services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
+            
+            services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
+            
+            services.AddControllers();
+            services.AddCarter();
 
             return services;
         }

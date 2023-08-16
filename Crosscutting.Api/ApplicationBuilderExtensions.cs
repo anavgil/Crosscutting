@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Carter;
+using Microsoft.AspNetCore.Builder;
 
 namespace Crosscutting.Api;
 public static class ApplicationBuilderExtensions
@@ -7,6 +8,10 @@ public static class ApplicationBuilderExtensions
     {
         app.UseMiddleware<ExceptionHandlerExtensions>();
 
+        app.UseEndpoints(endpoints =>
+        {
+            endpoints.MapCarter();
+        });
         return app;
     }
 }

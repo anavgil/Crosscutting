@@ -9,7 +9,7 @@ using Microsoft.Extensions.Diagnostics.HealthChecks;
 namespace Crosscutting.Api;
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseMiddleware(this IApplicationBuilder app)
+    public static IApplicationBuilder UseCrosscuttingBase(this IApplicationBuilder app)
     {
         app.UseRequestSecurity();
         app.UseExceptionHandler();

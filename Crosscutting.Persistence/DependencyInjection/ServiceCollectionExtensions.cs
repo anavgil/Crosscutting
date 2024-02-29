@@ -1,17 +1,13 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
-using Threenine.Data.DependencyInjection;
-
-namespace Crosscutting.Persistence.DependencyInjection
+﻿namespace Crosscutting.Persistence.DependencyInjection
 {
     public static class ServiceCollectionExtensions
     {
-        public static IServiceCollection ConfigurePersistenceLayer<TContext>(this IServiceCollection services) where TContext : DbContext
-        {
-            //https://genericrepository.readthedocs.io/en/latest/getting-started/
-            services.AddUnitOfWork<TContext>();
+        //public static IServiceCollection ConfigurePersistenceLayer<TContext>(this IServiceCollection services) where TContext : DbContext
+        //{
+        //    //https://genericrepository.readthedocs.io/en/latest/getting-started/
+        //    services.AddUnitOfWork<TContext>();
 
-            return services;
-        }
+        //    return services;
+        //}
     }
 }

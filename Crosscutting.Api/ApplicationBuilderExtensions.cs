@@ -1,4 +1,5 @@
 ﻿using Carter;
+using Crosscutting.Api.Middlewares;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -10,9 +11,10 @@ public static class ApplicationBuilderExtensions
 {
     public static IApplicationBuilder UseMiddleware(this IApplicationBuilder app)
     {
-        app.UseRateLimiter();
+        app.UseRequestSecurity();
+        app.UseExceptionHandler();
 
-        app.UseMiddleware<ExceptionHandlerExtensions>();
+        app.UseRateLimiter();
 
         app.UseEndpoints(endpoints =>
         {

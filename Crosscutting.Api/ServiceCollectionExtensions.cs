@@ -1,6 +1,7 @@
 ﻿using Carter;
 using Croscutting.Common.Configurations.Exception;
 using Croscutting.Common.Configurations.Global;
+using Crosscutting.Api.Middlewares;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -16,8 +17,9 @@ public static  class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services,Action<GlobalSettings> settings)
     {
-
-        services.ConfigureSettings();
+        services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; });
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
 
         //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
@@ -80,12 +82,7 @@ public static  class ServiceCollectionExtensions
         return services;
     }
 
-    public static IServiceCollection ConfigureSettings(this IServiceCollection services)
-    {
-        services.ConfigureOptions<ExceptionSettingsBinder>();
 
-        return services;
-    }
 
     private static IServiceCollection AddCarterDependencies(this IServiceCollection services)
     {

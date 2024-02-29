@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Croscutting.Common.Configurations.Exception;
+using Croscutting.Common.Configurations.Global;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -13,8 +14,9 @@ using System.Threading.RateLimiting;
 namespace Crosscutting.Api;
 public static  class ServiceCollectionExtensions 
 {
-    public static IServiceCollection ConfigureBase(this IServiceCollection services)
+    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services,Action<GlobalSettings> settings)
     {
+
         services.ConfigureSettings();
 
         //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);

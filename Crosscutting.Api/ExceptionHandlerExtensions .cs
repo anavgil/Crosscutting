@@ -50,7 +50,7 @@ public class ExceptionHandlerExtensions
         var exceptionHandlerFeature = new ExceptionHandlerFeature()
         {
             Error = ex,
-            Path = _options.RedirectPath
+            Path = string.Empty//_options.RedirectPath
         };
         context.Features.Set<IExceptionHandlerFeature>(exceptionHandlerFeature);
 

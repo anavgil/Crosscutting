@@ -10,7 +10,7 @@ namespace Crosscutting.Api
         {
             services.ConfigureSettings();
 
-            services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
+            //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
             
             services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly));
             

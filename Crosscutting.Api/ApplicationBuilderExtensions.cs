@@ -10,6 +10,8 @@ public static class ApplicationBuilderExtensions
 {
     public static IApplicationBuilder UseMiddleware(this IApplicationBuilder app)
     {
+        app.UseRateLimiter();
+
         app.UseMiddleware<ExceptionHandlerExtensions>();
 
         app.UseEndpoints(endpoints =>

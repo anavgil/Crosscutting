@@ -1,2 +1,2 @@
-# Noatum-Crosscutting
+# Crosscutting
 Solution for crosscutting concerns

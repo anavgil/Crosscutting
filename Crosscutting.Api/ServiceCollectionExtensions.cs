@@ -1,5 +1,4 @@
 ﻿using Carter;
-using Croscutting.Common.Configurations.Exception;
 using Croscutting.Common.Configurations.Global;
 using Crosscutting.Api.Middlewares;
 using FluentValidation;
@@ -13,9 +12,9 @@ using System.Reflection;
 using System.Threading.RateLimiting;
 
 namespace Crosscutting.Api;
-public static  class ServiceCollectionExtensions 
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services,Action<GlobalSettings> settings)
+    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services, GlobalSettings settings)
     {
         services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; });
         services.AddExceptionHandler<GlobalExceptionHandler>();
@@ -23,11 +22,12 @@ public static  class ServiceCollectionExtensions
 
         //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
-        services.AddRateLimiter(_ =>
+        if (settings.UseRateLimit)
+            services.AddRateLimiter(_ =>
         {
             _.OnRejected = (context, _) =>
             {
-                if(context.Lease.TryGetMetadata(MetadataName.RetryAfter,out var retryAfter))
+                if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
                 {
                     context.HttpContext.Response.Headers.RetryAfter =
                         ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
@@ -47,7 +47,7 @@ public static  class ServiceCollectionExtensions
                 options.QueueLimit = 2;
             });
         });
-        
+
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly))
                 .AddCarterDependencies()
                 .AddHealthCheckDependencies()
@@ -75,9 +75,9 @@ public static  class ServiceCollectionExtensions
     {
         services.AddHealthChecks()
                 .AddApplicationStatus(name: "api_status", tags: ["api"]);
-                //.AddRedis("", name: "redis_status", tags: ["redis"]);
+        //.AddRedis("", name: "redis_status", tags: ["redis"]);
         services.AddHealthChecksUI();
-                //.AddInMemoryStorage();
+        //.AddInMemoryStorage();
 
         return services;
     }

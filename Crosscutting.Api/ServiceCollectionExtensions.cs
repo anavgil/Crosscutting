@@ -1,6 +1,6 @@
 ﻿using Carter;
-using Croscutting.Common.Configurations.Exception;
 using Croscutting.Common.Configurations.Global;
+using Crosscutting.Api.Middlewares;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
@@ -12,20 +12,31 @@ using System.Reflection;
 using System.Threading.RateLimiting;
 
 namespace Crosscutting.Api;
-public static  class ServiceCollectionExtensions 
+public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services,Action<GlobalSettings> settings)
+    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services)
     {
+        GlobalSettings settings = new();
 
-        services.ConfigureSettings();
+        services.AddCrosscuttingBase(settings);
+
+        return services;
+    }
+
+    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services, GlobalSettings settings)
+    {
+        services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; });
+        services.AddExceptionHandler<GlobalExceptionHandler>();
+        services.AddProblemDetails();
 
         //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
-        services.AddRateLimiter(_ =>
+        if (settings.UseRateLimit)
+            services.AddRateLimiter(_ =>
         {
             _.OnRejected = (context, _) =>
             {
-                if(context.Lease.TryGetMetadata(MetadataName.RetryAfter,out var retryAfter))
+                if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
                 {
                     context.HttpContext.Response.Headers.RetryAfter =
                         ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
@@ -45,10 +56,12 @@ public static  class ServiceCollectionExtensions
                 options.QueueLimit = 2;
             });
         });
-        
+
+        if (settings.UseHealthChecks)
+            services.AddHealthCheckDependencies();
+
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly))
-                .AddCarterDependencies()
-                .AddHealthCheckDependencies()
+                .AddCarterDependencies()                
                 .AddCors();
 
         return services;
@@ -73,16 +86,9 @@ public static  class ServiceCollectionExtensions
     {
         services.AddHealthChecks()
                 .AddApplicationStatus(name: "api_status", tags: ["api"]);
-                //.AddRedis("", name: "redis_status", tags: ["redis"]);
+        //.AddRedis("", name: "redis_status", tags: ["redis"]);
         services.AddHealthChecksUI();
-                //.AddInMemoryStorage();
-
-        return services;
-    }
-
-    public static IServiceCollection ConfigureSettings(this IServiceCollection services)
-    {
-        services.ConfigureOptions<ExceptionSettingsBinder>();
+        //.AddInMemoryStorage();
 
         return services;
     }

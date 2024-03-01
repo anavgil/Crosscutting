@@ -61,7 +61,7 @@ public static class ServiceCollectionExtensions
             services.AddHealthCheckDependencies();
 
         services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly))
-                .AddCarterDependencies()                
+                .AddCarterDependencies()
                 .AddCors();
 
         return services;

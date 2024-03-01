@@ -48,7 +48,7 @@ public static class ApplicationBuilderExtensions
             app.UseHealthChecks("/health", healthCheckOptions);
             app.UseHealthChecksUI(config => { config.UIPath = "/health-ui"; });
         }
-        
+
 
         return app;
     }

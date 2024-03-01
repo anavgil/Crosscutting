@@ -33,29 +33,29 @@ public static class ServiceCollectionExtensions
 
         if (settings.UseRateLimit)
             services.AddRateLimiter(_ =>
-        {
-            _.OnRejected = (context, _) =>
             {
-                if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                _.OnRejected = (context, _) =>
                 {
-                    context.HttpContext.Response.Headers.RetryAfter =
-                        ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
-                }
+                    if (context.Lease.TryGetMetadata(MetadataName.RetryAfter, out var retryAfter))
+                    {
+                        context.HttpContext.Response.Headers.RetryAfter =
+                            ((int)retryAfter.TotalSeconds).ToString(NumberFormatInfo.InvariantInfo);
+                    }
 
-                context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
-                context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", cancellationToken: _);
+                    context.HttpContext.Response.StatusCode = StatusCodes.Status429TooManyRequests;
+                    context.HttpContext.Response.WriteAsync("Too many requests. Please try again later.", cancellationToken: _);
 
-                return new ValueTask();
-            };
+                    return new ValueTask();
+                };
 
-            _.AddFixedWindowLimiter(policyName: "fixed", options =>
-            {
-                options.PermitLimit = 4;
-                options.Window = TimeSpan.FromSeconds(12);
-                options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
-                options.QueueLimit = 2;
+                _.AddFixedWindowLimiter(policyName: "fixed", options =>
+                {
+                    options.PermitLimit = 4;
+                    options.Window = TimeSpan.FromSeconds(12);
+                    options.QueueProcessingOrder = QueueProcessingOrder.OldestFirst;
+                    options.QueueLimit = 2;
+                });
             });
-        });
 
         if (settings.UseHealthChecks)
             services.AddHealthCheckDependencies();

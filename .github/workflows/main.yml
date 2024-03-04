@@ -27,9 +27,9 @@ jobs:
       with:
         dotnet-version: 8.0.x
     - name: Restore dependencies
-      run: dotnet restore ${{ env.PROJECT_PATH }}
+      run: dotnet restore
     - name: Build
-      run: dotnet build ${{ env.PROJECT_PATH }} --configuration $BUILD_CONFIG --no-restore /p:Version=$VERSION
+      run: dotnet build --configuration $BUILD_CONFIG --no-restore /p:Version=$VERSION
     - name: pack nuget packages
       run: dotnet pack --output ${{ env.PACKAGE_OUTPUT_DIRECTORY}} --no-restore --no-build /p:PackageVersion=$VERSION
     - name: upload nuget package

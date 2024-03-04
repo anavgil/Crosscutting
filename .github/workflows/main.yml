@@ -13,9 +13,8 @@ on:
    
 env:
   BUILD_CONFIG: 'Release'
-  VERSION: 1.0.1
-  SOLUTION: 'Crosscutting.sln'
-  
+  #VERSION: 1.0.1
+    
 jobs:
   build:
     runs-on: ubuntu-latest

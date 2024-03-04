@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
-    - name: Set Version Variable
+    #- name: Set Version Variable
       #if: ${{ github.ref_type == 'tag' }}
       #env:
         #TAG: ${{ github.ref_name }}

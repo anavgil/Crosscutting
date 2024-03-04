@@ -4,7 +4,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>disable</Nullable>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Crosscutting.Api</Title>
     <PackageId>ang-$(AssemblyName)</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>

@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Serilog;
 
 namespace Crosscutting.Api;
 public static class ApplicationBuilderExtensions
@@ -21,8 +22,9 @@ public static class ApplicationBuilderExtensions
 
     public static IApplicationBuilder UseCrosscuttingBase(this IApplicationBuilder app, GlobalSettings settings)
     {
-        app.UseRequestSecurity();
-        app.UseExceptionHandler();
+        app.UseRequestSecurity()
+           .UseExceptionHandler()
+           .UseSerilogMiddleware();
 
         if (settings.UseRateLimit)
             app.UseRateLimiter();
@@ -49,6 +51,13 @@ public static class ApplicationBuilderExtensions
             app.UseHealthChecksUI(config => { config.UIPath = "/health-ui"; });
         }
 
+
+        return app;
+    }
+
+    private static IApplicationBuilder UseSerilogMiddleware(this IApplicationBuilder app)
+    {
+        app.UseSerilogRequestLogging();
 
         return app;
     }

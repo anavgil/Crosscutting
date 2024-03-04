@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
+using Serilog;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.RateLimiting;
@@ -93,6 +94,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    #region Carter Dependencies
     private static IServiceCollection AddCarterDependencies(this IServiceCollection services)
     {
         services.AddCarter(configurator: c =>
@@ -130,5 +132,12 @@ public static class ServiceCollectionExtensions
         return Assembly.Load(applicationAssembly).GetTypes()
                 .Where(t => !t.GetTypeInfo().IsAbstract && typeof(IValidator).IsAssignableFrom(t))
                 .ToArray();
+    } 
+    #endregion
+
+    private static IServiceCollection AddSerilogDependies(this IServiceCollection services)
+    {
+        services.AddSerilog();
+        return services;
     }
 }

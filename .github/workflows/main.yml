@@ -37,7 +37,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build $SOLUTION --configuration $BUILD_CONFIG --no-restore /p:Version=$VERSION
+      run: dotnet build --configuration $BUILD_CONFIG --no-restore /p:Version=$VERSION
     - name: pack nuget packages
       run: dotnet pack --output nupkgs --no-restore --no-build /p:PackageVersion=$VERSION
     - name: upload nuget package

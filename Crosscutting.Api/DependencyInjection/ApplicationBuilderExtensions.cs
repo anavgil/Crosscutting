@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Crosscutting.Api;
+namespace Crosscutting.Api.DependencyInjection;
 public static class ApplicationBuilderExtensions
 {
     public static IApplicationBuilder UseCrosscuttingBase(this IApplicationBuilder app)

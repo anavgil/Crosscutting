@@ -6,7 +6,7 @@ using Serilog;
 namespace Crosscutting.Base.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection ConfigureBase(this IServiceCollection services)
+    public static IServiceCollection AddBase(this IServiceCollection services)
     {
         services.ConfigureSettings();
         services.AddHttpClient();
@@ -18,7 +18,6 @@ public static class ServiceCollectionExtensions
     public static IServiceCollection ConfigureSettings(this IServiceCollection services)
     {
         services.ConfigureOptions<SerilogOptionsSettingsSetup>();
-        services.ConfigureOptions<RedisSettingsBinder>();
 
         return services;
     }

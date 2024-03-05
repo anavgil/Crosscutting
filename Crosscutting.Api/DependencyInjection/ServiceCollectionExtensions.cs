@@ -1,5 +1,6 @@
 ﻿using Carter;
 using Croscutting.Common.Configurations.Global;
+using Crosscutting.Api.DependencyInjection;
 using Crosscutting.Api.Middlewares;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
@@ -11,7 +12,7 @@ using System.Globalization;
 using System.Reflection;
 using System.Threading.RateLimiting;
 
-namespace Crosscutting.Api;
+namespace Crosscutting.Api.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services)

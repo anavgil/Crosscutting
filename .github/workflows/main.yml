@@ -6,6 +6,8 @@ name: .NET
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - Crosscutting.Api
     tags: 
       - "v*"
   # pull_request:

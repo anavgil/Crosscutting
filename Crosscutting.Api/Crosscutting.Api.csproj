@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net8.0</TargetFramework>
@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Crosscutting.Api</Title>
-    <PackageId>ang-$(AssemblyName)</PackageId>
+    <PackageId>$(AssemblyName)</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/anavgil/Crosscutting.git</RepositoryUrl>
@@ -39,8 +39,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Croscutting.Common\Crosscutting.Common.csproj">
       <IncludeAssets>all</IncludeAssets>
-      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-      <PrivateAssets></PrivateAssets>
+      <CopyLocalSatelliteAssemblies></CopyLocalSatelliteAssemblies>
     </ProjectReference>
   </ItemGroup>
 

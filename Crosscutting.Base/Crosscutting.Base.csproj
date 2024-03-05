@@ -6,6 +6,8 @@
     <Nullable>disable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <RepositoryUrl>https://github.com/anavgil/Crosscutting.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,7 +24,6 @@
     <ProjectReference Include="..\Croscutting.Common\Crosscutting.Common.csproj">
       <IncludeAssets>all</IncludeAssets>
       <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-      <PrivateAssets></PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 

@@ -4,6 +4,7 @@ using Crosscutting.Api.DependencyInjection;
 using Crosscutting.Api.Middlewares;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
+using Mapster;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
@@ -26,9 +27,12 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services, GlobalSettings settings)
     {
-        services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; });
-        services.AddExceptionHandler<GlobalExceptionHandler>();
-        services.AddProblemDetails();
+        services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; })
+                .AddExceptionHandler<GlobalExceptionHandler>()
+                .AddProblemDetails()
+                .AddMapsterConfiguration()
+                .AddMapster();
+
 
         //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
@@ -131,5 +135,21 @@ public static class ServiceCollectionExtensions
         return Assembly.Load(applicationAssembly).GetTypes()
                 .Where(t => !t.GetTypeInfo().IsAbstract && typeof(IValidator).IsAssignableFrom(t))
                 .ToArray();
+    }
+
+    private static IServiceCollection AddMapsterConfiguration(this IServiceCollection services)
+    {
+        var config = TypeAdapterConfig.GlobalSettings;
+
+        var assembly = Assembly.GetEntryAssembly();
+        var applicationAssembly = assembly.GetReferencedAssemblies()
+                                    .Where(x => x.FullName.Contains("Application"))
+                                    .FirstOrDefault();
+
+        if (applicationAssembly is not null)
+            config.Scan(Assembly.Load(applicationAssembly));
+
+
+        return services;
     }
 }

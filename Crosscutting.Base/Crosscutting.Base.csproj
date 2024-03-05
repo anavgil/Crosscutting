@@ -21,7 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Croscutting.Common\Croscutting.Common.csproj">
       <IncludeAssets></IncludeAssets>
-      <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
+      <CopyLocalSatelliteAssemblies></CopyLocalSatelliteAssemblies>
+      <PrivateAssets>All</PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 

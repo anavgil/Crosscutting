@@ -1,7 +1,7 @@
 ﻿using Carter;
-using Croscutting.Common.Configurations.Global;
 using Crosscutting.Api.DependencyInjection;
 using Crosscutting.Api.Middlewares;
+using Crosscutting.Common.Configurations.Global;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using Mapster;

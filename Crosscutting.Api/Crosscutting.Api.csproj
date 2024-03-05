@@ -37,10 +37,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Croscutting.Common\Croscutting.Common.csproj">
-      <IncludeAssets></IncludeAssets>
+    <ProjectReference Include="..\Croscutting.Common\Crosscutting.Common.csproj">
+      <IncludeAssets>all</IncludeAssets>
       <CopyLocalSatelliteAssemblies>True</CopyLocalSatelliteAssemblies>
-      <PrivateAssets>all</PrivateAssets>
+      <PrivateAssets></PrivateAssets>
     </ProjectReference>
   </ItemGroup>
 

@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Croscutting.Common\Croscutting.Common.csproj" />
+    <ProjectReference Include="..\Croscutting.Common\Crosscutting.Common.csproj" />
   </ItemGroup>
 
 </Project>

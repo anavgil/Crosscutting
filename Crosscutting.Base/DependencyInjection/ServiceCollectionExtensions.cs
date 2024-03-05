@@ -1,5 +1,4 @@
-﻿using Croscutting.Common.Configurations.Redis;
-using Croscutting.Common.Configurations.Serilog;
+﻿using Crosscutting.Common.Configurations.Serilog;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 

@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Croscutting.Common.Configurations.Serilog;
+namespace Crosscutting.Common.Configurations.Serilog;
 
 public class SerilogOptionsSettingsSetup : IConfigureOptions<SerilogSettingsBinder>
 {

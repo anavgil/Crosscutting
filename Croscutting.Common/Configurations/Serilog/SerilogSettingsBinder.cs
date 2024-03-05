@@ -1,4 +1,4 @@
-﻿namespace Croscutting.Common.Configurations.Serilog;
+﻿namespace Crosscutting.Common.Configurations.Serilog;
 
 public class SerilogSettingsBinder
 {

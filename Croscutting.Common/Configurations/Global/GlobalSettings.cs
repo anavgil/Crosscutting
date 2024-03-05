@@ -1,4 +1,4 @@
-﻿namespace Croscutting.Common.Configurations.Global;
+﻿namespace Crosscutting.Common.Configurations.Global;
 
 public class GlobalSettings
 {

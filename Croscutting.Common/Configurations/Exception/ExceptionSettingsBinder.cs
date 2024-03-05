@@ -1,4 +1,4 @@
-﻿namespace Croscutting.Common.Configurations.Exception;
+﻿namespace Crosscutting.Common.Configurations.Exception;
 
 public class ExceptionSettingsBinder
 {

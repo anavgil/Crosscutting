@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crosscutting.Base", "Crossc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crosscutting.Cache", "Crosscutting.Cache\Crosscutting.Cache.csproj", "{99C7C3DE-032B-4454-A632-C8446B8E5EE2}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Croscutting.Common", "Croscutting.Common\Croscutting.Common.csproj", "{7115C537-A512-4B5B-BC0D-64DF908E3D6D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crosscutting.Common", "Croscutting.Common\Crosscutting.Common.csproj", "{7115C537-A512-4B5B-BC0D-64DF908E3D6D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Crosscutting.Api", "Crosscutting.Api\Crosscutting.Api.csproj", "{A6E701F0-D8C7-4BD0-81C3-206EB264CF44}"
 EndProject

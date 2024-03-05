@@ -1,7 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Croscutting.Common.Configurations.Redis;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Croscutting.Common.Configurations.Redis;
+namespace Crosscutting.Common.Configurations.Redis;
 
 
 public class RedisOptionsSettingsSetup : IConfigureOptions<RedisSettingsBinder>

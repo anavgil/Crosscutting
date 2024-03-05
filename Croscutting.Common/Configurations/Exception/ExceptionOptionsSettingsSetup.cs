@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace Croscutting.Common.Configurations.Exception;
+namespace Crosscutting.Common.Configurations.Exception;
 
 public class ExceptionOptionsSettingsSetup : IConfigureOptions<ExceptionSettingsBinder>
 {

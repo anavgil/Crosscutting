@@ -1,6 +1,6 @@
 ﻿using Carter;
-using Croscutting.Common.Configurations.Global;
 using Crosscutting.Api.Middlewares;
+using Crosscutting.Common.Configurations.Global;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;

@@ -6,6 +6,8 @@ name: crosscutting-base
 on:
   push:
     branches: [ "main" ]
+    paths:
+      - Crosscutting.Base
     tags: 
       - "v*"
   # pull_request:

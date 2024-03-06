@@ -1,31 +1,31 @@
-﻿using Crosscutting.Persistence.Abstractions.UoW;
-using Crosscutting.Persistence.Repositories;
+﻿using Crosscutting.Persistence.Repositories.Abstraction;
+using Crosscutting.Persistence.Repositories.Implementation;
+using Crosscutting.Persistence.UoW.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
-namespace Crosscutting.Persistence.UoW;
+namespace Crosscutting.Persistence.UoW.Implementation;
 
-public class UnitOfWork(DbContext context, Dictionary<Type, object> repositories) : IUnitOfWork
+public class UnitOfWork<TContext>(TContext context) : IUnitOfWork where TContext :DbContext
 {
     private bool disposed = false;
-
-
+    private readonly Dictionary<Type, object> repositories = [];
 
     public async Task CompleteAsync()
     {
         await context.SaveChangesAsync();
     }
 
-    
+
     protected virtual void Dispose(bool disposing)
     {
-        if (!this.disposed)
+        if (!disposed)
         {
             if (disposing)
             {
                 context.Dispose();
             }
         }
-        this.disposed = true;
+        disposed = true;
     }
 
     public void Dispose()
@@ -34,14 +34,16 @@ public class UnitOfWork(DbContext context, Dictionary<Type, object> repositories
         GC.SuppressFinalize(this);
     }
 
-    public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class
+    public IRepository<TEntity, T> GetRepository<TEntity, T>()
+        where TEntity : class, IEntity<T>, new()
+        where T : IComparable, IEquatable<T>
     {
         if (repositories.ContainsKey(typeof(TEntity)))
         {
-            return (IRepository<TEntity>)repositories[typeof(TEntity)];
+            return (IRepository<TEntity, T>)repositories[typeof(TEntity)];
         }
 
-        var repository = new Repository<TEntity>(context);
+        var repository = new Repository<TEntity, T, TContext>(context);
         repositories.Add(typeof(TEntity), repository);
         return repository;
     }

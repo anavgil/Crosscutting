@@ -1,6 +1,5 @@
-﻿using Crosscutting.Persistence.Abstractions.UoW;
-using Crosscutting.Persistence.Repositories;
-using Crosscutting.Persistence.UoW;
+﻿using Crosscutting.Persistence.UoW.Abstraction;
+using Crosscutting.Persistence.UoW.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -13,7 +12,7 @@ namespace Crosscutting.Persistence.DependencyInjection
             //https://genericrepository.readthedocs.io/en/latest/getting-started/
             //
 
-            services.AddScoped<IUnitOfWork,UnitOfWork>();
+            services.AddScoped<IUnitOfWork, UnitOfWork<TContext>>();
 
             return services;
         }

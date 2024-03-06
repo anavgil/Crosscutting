@@ -5,15 +5,10 @@ using Microsoft.Extensions.Options;
 namespace Crosscutting.Common.Configurations.Redis;
 
 
-public class RedisOptionsSettingsSetup : IConfigureOptions<RedisSettingsBinder>
+public class RedisOptionsSettingsSetup(IConfiguration configuration) : IConfigureOptions<RedisSettingsBinder>
 {
     private const string _sectionName = "Redis";
-    private readonly IConfiguration _configuration;
-
-    public RedisOptionsSettingsSetup(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    private readonly IConfiguration _configuration = configuration;
 
     public void Configure(RedisSettingsBinder options)
     {

@@ -3,15 +3,10 @@ using Microsoft.Extensions.Options;
 
 namespace Crosscutting.Common.Configurations.Exception;
 
-public class ExceptionOptionsSettingsSetup : IConfigureOptions<ExceptionSettingsBinder>
+public class ExceptionOptionsSettingsSetup(IConfiguration configuration) : IConfigureOptions<ExceptionSettingsBinder>
 {
     private const string _sectionName = "Exception";
-    private readonly IConfiguration _configuration;
-
-    public ExceptionOptionsSettingsSetup(IConfiguration configuration)
-    {
-        _configuration = configuration;
-    }
+    private readonly IConfiguration _configuration = configuration;
 
     public void Configure(ExceptionSettingsBinder options)
     {

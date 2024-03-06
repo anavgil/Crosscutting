@@ -6,7 +6,7 @@
     <Nullable>disable</Nullable>
     <GeneratePackageOnBuild>False</GeneratePackageOnBuild>
     <Title>Crosscutting.Api</Title>
-    <PackageId>$(AssemblyName)</PackageId>
+    <PackageId>ang-$(AssemblyName)</PackageId>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/anavgil/Crosscutting.git</RepositoryUrl>

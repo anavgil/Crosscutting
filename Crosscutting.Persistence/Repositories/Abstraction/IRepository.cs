@@ -2,7 +2,7 @@
 
 namespace Crosscutting.Persistence.Repositories.Abstraction;
 
-public interface IRepository<TEntity,T> 
+public interface IRepository<TEntity, T>
     where TEntity : class, IEntity<T>, new()
     where T : IComparable, IEquatable<T>
 {

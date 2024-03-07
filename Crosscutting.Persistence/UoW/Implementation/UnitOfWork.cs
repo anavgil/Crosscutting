@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Crosscutting.Persistence.UoW.Implementation;
 
 public class UnitOfWork<TContext>(TContext context) : IUnitOfWork, IDisposable
-    where TContext :DbContext
+    where TContext : DbContext
 {
     private bool disposed = false;
     private readonly Dictionary<Type, object> repositories = [];

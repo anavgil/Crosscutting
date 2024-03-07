@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net;
@@ -14,7 +13,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
         var exceptionMessage = exception.Message;
 
         _logger.LogError(exception,
-            "Error Message: {}, Time  of occurrence {time}",exceptionMessage,DateTime.UtcNow);
+            "Error Message: {}, Time  of occurrence {time}", exceptionMessage, DateTime.UtcNow);
 
         httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 

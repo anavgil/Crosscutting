@@ -17,7 +17,7 @@ namespace Crosscutting.Persistence.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection ConfigurePersistenceLayer<TContext,TContext1>(this IServiceCollection services)
+        public static IServiceCollection ConfigurePersistenceLayer<TContext, TContext1>(this IServiceCollection services)
             where TContext : DbContext
             where TContext1 : DbContext
         {
@@ -28,7 +28,7 @@ namespace Crosscutting.Persistence.DependencyInjection
             return services;
         }
 
-        public static IServiceCollection ConfigurePersistenceLayer<TContext, TContext1,TContext2>(this IServiceCollection services)
+        public static IServiceCollection ConfigurePersistenceLayer<TContext, TContext1, TContext2>(this IServiceCollection services)
             where TContext : DbContext
             where TContext1 : DbContext
             where TContext2 : DbContext

@@ -35,8 +35,8 @@ public class UnitOfWork<TContext>(TContext context) : IUnitOfWork where TContext
     }
 
     public IRepository<TEntity, T> GetRepository<TEntity, T>()
-        where TEntity : class, IEntity<T>, new()
-        where T : IComparable, IEquatable<T>
+                        where TEntity : class, IEntity<T>, new()
+                        where T : IComparable, IEquatable<T>
     {
         if (repositories.ContainsKey(typeof(TEntity)))
         {

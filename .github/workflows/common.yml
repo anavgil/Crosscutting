@@ -1,0 +1,41 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: Crosscutting-Common
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:
+      - Crosscutting.Common
+    tags: 
+      - "v*"
+  # pull_request:
+  #   branches: [ "main" ]
+   
+env:
+  BUILD_CONFIG: 'Release'
+  PROJECT_PATH: 'Croscutting.Common/Crosscutting.Common.csproj'
+  NUGET_SOURCE_PATH: 'https://api.nuget.org/v3/index.json'
+  PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace}}/common/output
+    
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 8.0.x
+    - name: Restore dependencies
+      run: dotnet restore ${{ env.PROJECT_PATH }}
+    - name: Build
+      run: dotnet build ${{ env.PROJECT_PATH }} --configuration $BUILD_CONFIG --no-restore
+    - name: 'Get Version'
+      id: version
+      uses: battila7/get-version-action@v2
+    - name: pack nuget packages
+      run: dotnet pack ${{ env.PROJECT_PATH }} --output ${{ env.PACKAGE_OUTPUT_DIRECTORY}} --no-restore --no-build -p:PackageVersion=${{ steps.version.outputs.version-without-v }}
+    - name: upload nuget package
+      run: dotnet nuget push ${{ env.PACKAGE_OUTPUT_DIRECTORY}}/*.nupkg --source ${{ env.NUGET_SOURCE_PATH }} --api-key ${{ secrets.NUGET_APIKEY }} --skip-duplicate --no-service-endpoint

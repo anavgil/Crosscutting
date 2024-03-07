@@ -8,6 +8,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/anavgil/Crosscutting.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PackageId>ang-$(AssemblyName)</PackageId>
   </PropertyGroup>
 
   <ItemGroup>

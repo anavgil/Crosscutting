@@ -15,7 +15,7 @@ on:
    
 env:
   BUILD_CONFIG: 'Release'
-  PROJECT_PATH: 'Crosscutting.Common/Crosscutting.Common.csproj'
+  PROJECT_PATH: 'Croscutting.Common/Crosscutting.Common.csproj'
   NUGET_SOURCE_PATH: 'https://api.nuget.org/v3/index.json'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace}}/common/output
     

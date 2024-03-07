@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net;
 
 namespace Crosscutting.Api.Middlewares;
 
@@ -9,14 +11,19 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
 {
     public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
     {
-        _logger.LogError(exception, string.Empty);
+        var exceptionMessage = exception.Message;
+
+        _logger.LogError(exception,
+            "Error Message: {}, Time  of occurrence {time}",exceptionMessage,DateTime.UtcNow);
+
+        httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
 
         var problemDetails = new ProblemDetails
         {
-            Status = StatusCodes.Status500InternalServerError,
-            Title = "Server error",
+            Status = (int)HttpStatusCode.BadRequest,
+            Title = "An error occurred",
             Detail = exception.Message,
-            Type = nameof(Exception)
+            Type = exception.GetType().Name
         };
 
         httpContext.Response.StatusCode = problemDetails.Status.Value;

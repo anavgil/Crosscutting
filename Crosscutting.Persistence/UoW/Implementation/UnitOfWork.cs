@@ -1,6 +1,6 @@
-﻿using Crosscutting.Persistence.Repositories.Abstraction;
+﻿using Crosscutting.Persistence.Abstractions.Repositories;
+using Crosscutting.Persistence.Abstractions.UoW;
 using Crosscutting.Persistence.Repositories.Implementation;
-using Crosscutting.Persistence.UoW.Abstraction;
 using Microsoft.EntityFrameworkCore;
 
 namespace Crosscutting.Persistence.UoW.Implementation;

@@ -24,4 +24,10 @@
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="8.0.2" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Crosscutting.Persistence.Abstractions\Crosscutting.Persistence.Abstractions.csproj">
+      <IncludeAssets>All</IncludeAssets>
+    </ProjectReference>
+  </ItemGroup>
+
 </Project>

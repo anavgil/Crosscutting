@@ -1,4 +1,4 @@
-﻿using Crosscutting.Persistence.Repositories.Abstraction;
+﻿using Crosscutting.Persistence.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 
@@ -9,7 +9,6 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
     where T : IComparable, IEquatable<T>
     where TContext : DbContext
 {
-    private readonly TContext _context;
     protected readonly DbSet<TEntity> DbSet;
 
     public Repository(TContext context)
@@ -17,7 +16,6 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
         ArgumentNullException.ThrowIfNull(context);
 
         DbSet = context.Set<TEntity>();
-        _context = context;
     }
 
     public void Add(TEntity entity)

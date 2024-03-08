@@ -1,6 +1,6 @@
 ﻿using System.Linq.Expressions;
 
-namespace Crosscutting.Persistence.Repositories.Abstraction;
+namespace Crosscutting.Persistence.Abstractions.Repositories;
 
 public interface IRepository<TEntity, T>
     where TEntity : class, IEntity<T>, new()
@@ -8,7 +8,7 @@ public interface IRepository<TEntity, T>
 {
     TEntity GetSingle(T id);
     TEntity GetSingle(Expression<Func<TEntity, bool>> condition);
-    IEnumerable<TEntity> Fetch(Expression<Func<TEntity, bool>> condition = null);
+    IEnumerable<TEntity> Fetch(Expression<Func<TEntity, bool>> condition);
     void Add(TEntity entity);
     void Update(TEntity entity);
     void Delete(TEntity entity);

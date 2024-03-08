@@ -1,4 +1,4 @@
-﻿using Crosscutting.Persistence.UoW.Abstraction;
+﻿using Crosscutting.Persistence.Abstractions.UoW;
 using Crosscutting.Persistence.UoW.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

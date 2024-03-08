@@ -1,6 +1,6 @@
-﻿using Crosscutting.Persistence.Repositories.Abstraction;
+﻿using Crosscutting.Persistence.Abstractions.Repositories;
 
-namespace Crosscutting.Persistence.UoW.Abstraction;
+namespace Crosscutting.Persistence.Abstractions.UoW;
 public interface IUnitOfWork : IDisposable
 {
     Task CompleteAsync();

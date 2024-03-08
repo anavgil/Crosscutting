@@ -1,4 +1,4 @@
-﻿namespace Crosscutting.Persistence.Repositories.Abstraction;
+﻿namespace Crosscutting.Persistence.Abstractions.Repositories;
 
 public interface IEntity<T> where T : IComparable, IEquatable<T>
 {

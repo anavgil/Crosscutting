@@ -11,6 +11,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <RepositoryUrl>https://github.com/anavgil/Crosscutting.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <Description>Api crosscutting concerns</Description>
   </PropertyGroup>
 
   <ItemGroup>

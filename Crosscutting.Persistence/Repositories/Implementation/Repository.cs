@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 namespace Crosscutting.Persistence.Repositories.Implementation;
 
 public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
-    where TEntity : class, IEntity<T>, new()
+    where TEntity : class, new()
     where T : IComparable, IEquatable<T>
     where TContext : DbContext
 {
@@ -39,7 +39,7 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
     {
         if (id.Equals(default)) throw new ArgumentNullException(nameof(id));
 
-        return DbSet.SingleOrDefault(x => x.Id.Equals(id));
+        //return DbSet.SingleOrDefault(x => x.Id.Equals(id));
     }
 
     public TEntity GetSingle(Expression<Func<TEntity, bool>> condition)

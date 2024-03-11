@@ -1,5 +1,6 @@
 ﻿using Crosscutting.Persistence.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq.Expressions;
 
 namespace Crosscutting.Persistence.Repositories.Implementation;
@@ -30,9 +31,23 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
         DbSet.Remove(entity);
     }
 
-    public IEnumerable<TEntity> Fetch(Expression<Func<TEntity, bool>> condition = null)
+    public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, 
+                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
+                                                        List<Expression<Func<TEntity, object>>> includes = null, 
+                                                        bool disableTracking = true, CancellationToken ct = default)
     {
-        return condition != null ? DbSet.Where(condition).AsEnumerable() : DbSet.AsEnumerable();
+        IQueryable<TEntity> query = DbSet;
+
+        if (disableTracking) query = query.AsNoTracking();
+
+        if (includes != null) query = includes.Aggregate(query, (current, include) => current.Include(include));
+
+        if (filter != null) query = query.Where(filter);
+
+        if (orderBy != null)
+            return await orderBy(query).ToListAsync(ct);
+
+        return await query.ToListAsync(ct);
     }
 
     public TEntity GetSingle(Expression<Func<TEntity, bool>> condition)

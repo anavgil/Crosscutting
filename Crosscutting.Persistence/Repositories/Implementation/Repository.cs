@@ -35,13 +35,6 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
         return condition != null ? DbSet.Where(condition).AsEnumerable() : DbSet.AsEnumerable();
     }
 
-    public TEntity GetSingle(T id)
-    {
-        if (id.Equals(default)) throw new ArgumentNullException(nameof(id));
-
-        //return DbSet.SingleOrDefault(x => x.Id.Equals(id));
-    }
-
     public TEntity GetSingle(Expression<Func<TEntity, bool>> condition)
     {
         ArgumentNullException.ThrowIfNull(condition);

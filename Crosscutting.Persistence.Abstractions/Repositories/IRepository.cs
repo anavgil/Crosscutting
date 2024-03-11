@@ -6,7 +6,6 @@ public interface IRepository<TEntity, T>
     where TEntity : class, new()
     where T : IComparable, IEquatable<T>
 {
-    TEntity GetSingle(T id);
     TEntity GetSingle(Expression<Func<TEntity, bool>> condition);
     IEnumerable<TEntity> Fetch(Expression<Func<TEntity, bool>> condition);
     void Add(TEntity entity);

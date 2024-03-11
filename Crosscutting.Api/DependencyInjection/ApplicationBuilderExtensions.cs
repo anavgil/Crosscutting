@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Serilog;
 
 namespace Crosscutting.Api.DependencyInjection;
 public static class ApplicationBuilderExtensions
@@ -26,6 +27,8 @@ public static class ApplicationBuilderExtensions
 
         if (settings.UseRateLimit)
             app.UseRateLimiter();
+
+        app.UseSerilogRequestLogging();
 
         app.UseEndpoints(endpoints =>
         {
@@ -48,7 +51,6 @@ public static class ApplicationBuilderExtensions
             app.UseHealthChecks("/health", healthCheckOptions);
             app.UseHealthChecksUI(config => { config.UIPath = "/health-ui"; });
         }
-
 
         return app;
     }

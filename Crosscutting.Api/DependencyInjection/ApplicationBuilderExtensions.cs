@@ -22,13 +22,12 @@ public static class ApplicationBuilderExtensions
 
     public static IApplicationBuilder UseCrosscuttingBase(this IApplicationBuilder app, GlobalSettings settings)
     {
+        app.UseSerilogRequestLogging();
         app.UseRequestSecurity();
         app.UseExceptionHandler();
 
         if (settings.UseRateLimit)
             app.UseRateLimiter();
-
-        app.UseSerilogRequestLogging();
 
         app.UseEndpoints(endpoints =>
         {

@@ -27,12 +27,11 @@ public static class ServiceCollectionExtensions
 
     public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services, GlobalSettings settings)
     {
+
         services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; })
                 .AddExceptionHandler<GlobalExceptionHandler>()
                 .AddProblemDetails()
                 .AddSerilog();
-
-        //services.AddAutoMapper(typeof(ServiceCollectionExtensions).Assembly);
 
         if (settings.UseRateLimit)
             services.AddRateLimiter(_ =>

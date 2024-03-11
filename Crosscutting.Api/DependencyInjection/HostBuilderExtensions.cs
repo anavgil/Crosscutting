@@ -12,7 +12,9 @@ public static class HostBuilderExtensions
         {
             logger
                 .Enrich.FromLogContext()
-                .Enrich.WithSpan();
+                .Enrich.WithSpan()
+                .ReadFrom.Configuration(context.Configuration)
+                ;
 
             //if (context.HostingEnvironment.IsDevelopment())
             //{

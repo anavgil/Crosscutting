@@ -6,7 +6,7 @@ namespace Crosscutting.Api.DependencyInjection;
 
 public static class HostBuilderExtensions
 {
-    public static IHostBuilder UseLogging(this IHostBuilder builder)
+    public static IHostBuilder UseCrosscuttingLogging(this IHostBuilder builder)
     {
         return builder.UseSerilog((context, logger) =>
         {

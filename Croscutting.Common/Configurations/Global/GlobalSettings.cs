@@ -4,4 +4,6 @@ public class GlobalSettings
 {
     public bool UseRateLimit { get; set; } = true;
     public bool UseHealthChecks { get; set; } = true;
+
+    public bool UseCarter { get; set; } = true;
 }

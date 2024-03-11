@@ -16,16 +16,16 @@ using System.Threading.RateLimiting;
 namespace Crosscutting.Api.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services)
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services)
     {
         GlobalSettings settings = new();
 
-        services.AddCrosscuttingBase(settings);
+        services.AddCrosscuttingApi(settings);
 
         return services;
     }
 
-    public static IServiceCollection AddCrosscuttingBase(this IServiceCollection services, GlobalSettings settings)
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, GlobalSettings settings)
     {
 
         services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; })
@@ -62,8 +62,7 @@ public static class ServiceCollectionExtensions
         if (settings.UseHealthChecks)
             services.AddHealthCheckDependencies();
 
-        services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(ServiceCollectionExtensions).Assembly))
-                .AddCarterDependencies()
+        services.AddCarterDependencies()
                 .AddCors();
 
         return services;

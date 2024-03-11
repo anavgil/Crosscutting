@@ -11,16 +11,16 @@ using Serilog;
 namespace Crosscutting.Api.DependencyInjection;
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder UseCrosscuttingBase(this IApplicationBuilder app)
+    public static IApplicationBuilder UseCrosscuttingApi(this IApplicationBuilder app)
     {
         GlobalSettings settings = new();
 
-        app.UseCrosscuttingBase(settings);
+        app.UseCrosscuttingApi(settings);
 
         return app;
     }
 
-    public static IApplicationBuilder UseCrosscuttingBase(this IApplicationBuilder app, GlobalSettings settings)
+    public static IApplicationBuilder UseCrosscuttingApi(this IApplicationBuilder app, GlobalSettings settings)
     {
         app.UseSerilogRequestLogging();
         app.UseRequestSecurity();

@@ -6,7 +6,7 @@ using System.Reflection;
 namespace Crosscutting.Base.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddBase(this IServiceCollection services)
+    public static IServiceCollection AddApplicationCrosscutting(this IServiceCollection services)
     {
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 .AddMapsterConfiguration()

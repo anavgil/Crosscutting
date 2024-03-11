@@ -7,7 +7,7 @@ on:
   push:
     branches: [ "main" ]
     paths:
-      - Crosscutting.Application
+      - Crosscutting.Base
     tags: 
       - "v*"
   # pull_request:
@@ -15,7 +15,7 @@ on:
    
 env:
   BUILD_CONFIG: 'Release'
-  PROJECT_PATH: 'Crosscutting.Application/Crosscutting.Application.csproj'
+  PROJECT_PATH: 'Crosscutting.Base/Crosscutting.Application.csproj'
   NUGET_SOURCE_PATH: 'https://api.nuget.org/v3/index.json'
   PACKAGE_OUTPUT_DIRECTORY: ${{ github.workspace}}/base/output
     

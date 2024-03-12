@@ -6,7 +6,7 @@ public interface IRepository<TEntity, T>
     where TEntity : class, new()
     where T : IComparable, IEquatable<T>
 {
-    Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null, 
+    Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
                                     Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
                                     List<Expression<Func<TEntity, object>>>? includes = null,
                                     bool disableTracking = true,

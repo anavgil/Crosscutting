@@ -25,13 +25,24 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, Action<GlobalSettings> setupSettings = null)
+    {
+        GlobalSettings settings = new();
+
+        setupSettings?.Invoke(settings);
+
+        services.AddCrosscuttingApi(settings);
+
+        return services;
+    }
+
     public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, GlobalSettings settings)
     {
-
         services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; })
                 .AddExceptionHandler<GlobalExceptionHandler>()
                 .AddProblemDetails()
-                .AddSerilog();
+                .AddSerilog()
+                .AddCors();
 
         if (settings.UseRateLimit)
             services.AddRateLimiter(_ =>
@@ -62,8 +73,8 @@ public static class ServiceCollectionExtensions
         if (settings.UseHealthChecks)
             services.AddHealthCheckDependencies();
 
-        services.AddCarterDependencies()
-                .AddCors();
+        if (settings.UseCarter)
+            services.AddCarterDependencies();
 
         return services;
     }

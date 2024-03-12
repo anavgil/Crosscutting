@@ -2,8 +2,33 @@
 
 public class GlobalSettings
 {
-    public bool UseRateLimit { get; set; } = true;
-    public bool UseHealthChecks { get; set; } = true;
+    public bool UseRateLimit { get; internal set; }
+    public bool UseHealthChecks { get; internal set; }
+    public bool UseCarter { get; internal set; }
 
-    public bool UseCarter { get; set; } = true;
+    public GlobalSettings()
+    {
+        UseRateLimit = false;
+        UseHealthChecks = false;
+        UseCarter = true;
+    }
+
+    public GlobalSettings SetRateLimit()
+    {
+        this.UseRateLimit = true;
+
+        return this;
+    }
+
+    public GlobalSettings SetHealthChecks()
+    {
+        this.UseHealthChecks = true;
+        return this;
+    }
+
+    public GlobalSettings UnSetCarter()
+    {
+        this.UseCarter = false;
+        return this;
+    }
 }

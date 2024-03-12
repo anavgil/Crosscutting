@@ -1,6 +1,5 @@
 ﻿using Crosscutting.Persistence.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Linq.Expressions;
 
 namespace Crosscutting.Persistence.Repositories.Implementation;
@@ -31,9 +30,9 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
         DbSet.Remove(entity);
     }
 
-    public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null, 
-                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null, 
-                                                        List<Expression<Func<TEntity, object>>> includes = null, 
+    public async Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
+                                                        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                                        List<Expression<Func<TEntity, object>>> includes = null,
                                                         bool disableTracking = true, CancellationToken ct = default)
     {
         IQueryable<TEntity> query = DbSet;

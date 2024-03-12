@@ -21,7 +21,7 @@ public static class ApplicationBuilderExtensions
         return app;
     }
 
-    public static IApplicationBuilder  UseCrosscutting(this IApplicationBuilder app, Action<GlobalSettings> setupSettings = null)
+    public static IApplicationBuilder UseCrosscuttingApi(this IApplicationBuilder app, Action<GlobalSettings> setupSettings = null)
     {
         GlobalSettings settings = new();
 

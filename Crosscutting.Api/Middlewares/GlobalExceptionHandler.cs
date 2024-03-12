@@ -25,6 +25,13 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
             Type = exception.GetType().Name
         };
 
+        if (exception.InnerException is not null)
+            problemDetails.Extensions = new Dictionary<string, object>()
+            {
+                { "INNER-Message",exception.InnerException.Message },
+                { "INNER-Type",exception.InnerException.GetType().Name}
+            };
+
         httpContext.Response.StatusCode = problemDetails.Status.Value;
 
         await httpContext.Response

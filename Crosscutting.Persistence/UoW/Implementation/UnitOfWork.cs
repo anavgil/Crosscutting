@@ -11,9 +11,9 @@ public class UnitOfWork<TContext>(TContext context) : IUnitOfWork, IDisposable
     private bool disposed = false;
     private readonly Dictionary<Type, object> repositories = [];
 
-    public async Task CompleteAsync()
+    public async Task CompleteAsync(CancellationToken cancellationToken = default)
     {
-        await context.SaveChangesAsync();
+        await context.SaveChangesAsync(cancellationToken);
     }
 
 

@@ -99,8 +99,8 @@ public static class ServiceCollectionExtensions
         services.AddHealthChecks()
                 .AddApplicationStatus(name: "api_status", tags: ["api"]);
         //.AddRedis("", name: "redis_status", tags: ["redis"]);
-        services.AddHealthChecksUI();
-        //.AddInMemoryStorage();
+        services.AddHealthChecksUI()
+                .AddInMemoryStorage();
 
         return services;
     }

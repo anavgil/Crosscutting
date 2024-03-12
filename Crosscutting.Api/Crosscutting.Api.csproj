@@ -29,6 +29,7 @@
     <PackageReference Include="AspNetCore.HealthChecks.ApplicationStatus" Version="8.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI" Version="8.0.0" />
     <PackageReference Include="AspNetCore.HealthChecks.UI.Client" Version="8.0.0" />
+    <PackageReference Include="AspNetCore.HealthChecks.UI.InMemory.Storage" Version="8.0.0" />
     <PackageReference Include="Carter" Version="8.0.0" />
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="Microsoft.IdentityModel.JsonWebTokens" Version="7.4.0" />

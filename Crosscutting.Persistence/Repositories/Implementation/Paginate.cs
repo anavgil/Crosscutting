@@ -1,52 +1,32 @@
 ﻿using Crosscutting.Persistence.Abstractions.Repositories;
+using System.Collections;
 
-namespace Crosscutting.Persistence.Repositories.Implementation
+namespace Crosscutting.Persistence.Repositories.Implementation;
+
+public class Paginate<TEntity> : IReadOnlyList<TEntity>,
+                                IPaginate<TEntity> where TEntity : class, new()
 {
-    public class Paginate<TEntity> : IPaginate<TEntity> where TEntity : class, new()
+    private readonly IList<TEntity> subset;
+
+    public Paginate(IEnumerable<TEntity> items, int count, int pageNumber, int pageSize)
     {
-        public int From { get; set; }
-
-        public int Index { get; set; }
-
-        public int Size { get; set; }
-
-        public int Count { get; set; }
-
-        public int Pages { get; set; }
-
-        public IList<TEntity> Items { get; set; }
-
-        public bool HasPrevious => Index - From > 1;
-
-        public bool HasNext => Index - From + 1 < Pages;
-
-        public Paginate()
-        {
-        }
-
-        public Paginate(IEnumerable<TEntity> source, int index, int size, int from)
-        {
-            var enumerable = source as TEntity[] ?? source.ToArray();
-
-            if (from > index)
-                throw new ArgumentException($"indexFrom: {from} > pageIndex: {index}, must indexFrom <= pageIndex");
-
-            Size = size;
-            Index = index;
-            From = from;
-
-            if (source is IQueryable<TEntity> queryable)
-            {
-                Count = queryable.Count();
-                Items = [.. queryable.Skip((Index - From) * Size).Take(Size)];
-            }
-            else
-            {
-                Count = enumerable.Length;
-                Items = enumerable.Skip((Index - From) * Size).Take(Size).ToList();
-            }
-
-            Pages = (int)(Math.Ceiling(Count / (double)Size));
-        }
+        PageNumber = pageNumber;
+        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
+        subset = items as IList<TEntity> ?? new List<TEntity>(items);
     }
+
+    public int PageNumber { get; }
+    public int TotalPages { get; }
+
+    public TEntity this[int index] => subset[index];
+
+    public bool IsFirstPage => PageNumber == 1;
+
+    public bool IsLastPage => PageNumber == TotalPages;
+
+    public int Count => subset.Count;
+
+    public IEnumerator<TEntity> GetEnumerator() => subset.GetEnumerator();
+
+    IEnumerator IEnumerable.GetEnumerator() => subset.GetEnumerator();
 }

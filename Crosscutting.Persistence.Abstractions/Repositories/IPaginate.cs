@@ -2,19 +2,15 @@
 
 public interface IPaginate<TEntity> where TEntity : class, new()
 {
-    int From { get; }
+    int PageNumber { get; }
 
-    int Index { get; }
+    int TotalPages { get; }
 
-    int Size { get; }
+    bool IsFirstPage => PageNumber == 1;
+
+    bool IsLastPage => PageNumber == TotalPages;
 
     int Count { get; }
 
-    int Pages { get; }
 
-    IList<TEntity> Items { get; }
-
-    bool HasPrevious { get; }
-
-    bool HasNext { get; }
 }

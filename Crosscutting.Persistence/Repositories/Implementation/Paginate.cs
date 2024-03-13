@@ -26,6 +26,8 @@ public class Paginate<TEntity> : IReadOnlyList<TEntity>,
 
     public int Count => subset.Count;
 
+    public IReadOnlyList<TEntity> Data => [.. subset];
+
     public IEnumerator<TEntity> GetEnumerator() => subset.GetEnumerator();
 
     IEnumerator IEnumerable.GetEnumerator() => subset.GetEnumerator();

@@ -2,6 +2,7 @@
 
 public interface IPaginate<TEntity> where TEntity : class, new()
 {
+    IReadOnlyList<TEntity> Data { get; }
     int PageNumber { get; }
 
     int TotalPages { get; }
@@ -12,5 +13,5 @@ public interface IPaginate<TEntity> where TEntity : class, new()
 
     int Count { get; }
 
-
+    IEnumerator<TEntity> GetEnumerator();
 }

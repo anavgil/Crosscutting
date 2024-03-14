@@ -16,6 +16,11 @@ public static class ApiResponseExtensions
             foreach (var error in result.Errors)
             {
                 responseBase.ErrorMessages.Add(new ApiError(string.Empty, error.Message));
+
+                foreach(var reason in  error.Reasons)
+                {
+                    responseBase.ErrorMessages.Add(new ApiError(string.Empty, reason.Message));
+                }
             }
         }
 

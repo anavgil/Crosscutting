@@ -42,6 +42,7 @@ public static class ServiceCollectionExtensions
                 .AddExceptionHandler<GlobalExceptionHandler>()
                 .AddProblemDetails()
                 .AddSerilog()
+                .AddRouting()
                 .AddCors();
 
         if (settings.UseRateLimit)

@@ -2,12 +2,13 @@
 
 public static class ApiResponseExtensions
 {
-    public static ApiResponseBase<T> ToApiResponseBase<T>(this FluentResults.Result<T> result)
+    public static ApiResponseBase<T> ToApiResponseBase<T>(this FluentResults.IResult<T> result)
     {
         ApiResponseBase<T> responseBase = new()
         {
             IsSuccess = result.IsSuccess,
-            Data = result.ValueOrDefault
+            Data = result.ValueOrDefault,
+            ErrorMessages = []
         };
 
         if (result.IsFailed && result.Errors.Count != 0)

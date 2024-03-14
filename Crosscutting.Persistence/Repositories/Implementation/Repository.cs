@@ -4,9 +4,8 @@ using System.Linq.Expressions;
 
 namespace Crosscutting.Persistence.Repositories.Implementation;
 
-public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
+public class Repository<TEntity, TContext> : IRepository<TEntity>
     where TEntity : class, new()
-    where T : IComparable, IEquatable<T>
     where TContext : DbContext
 {
     public const int PAGINATION_SIZE = 20;
@@ -90,11 +89,11 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
         return DbSet.SingleOrDefault(condition);
     }
 
-    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> condition,CancellationToken ct)
+    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> condition, CancellationToken ct)
     {
         ArgumentNullException.ThrowIfNull(condition);
 
-        return await DbSet.SingleOrDefaultAsync(condition,ct);
+        return await DbSet.SingleOrDefaultAsync(condition, ct);
     }
 
     public void Update(TEntity entity)

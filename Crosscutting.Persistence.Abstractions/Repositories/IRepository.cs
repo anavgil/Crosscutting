@@ -2,11 +2,8 @@
 
 namespace Crosscutting.Persistence.Abstractions.Repositories;
 
-
-
-public interface IRepository<TEntity, T>
+public interface IRepository<TEntity>
     where TEntity : class, new()
-    where T : IComparable, IEquatable<T>
 {
     Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
                                 Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
@@ -22,7 +19,7 @@ public interface IRepository<TEntity, T>
                                     CancellationToken ct = default);
 
     TEntity GetSingle(Expression<Func<TEntity, bool>> condition);
-    Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> condition,CancellationToken ct = default);
+    Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> condition, CancellationToken ct = default);
     void Add(TEntity entity);
     void Add(IEnumerable<TEntity> entities);
     void Update(TEntity entity);

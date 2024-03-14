@@ -35,16 +35,14 @@ public class UnitOfWork<TContext>(TContext context) : IUnitOfWork, IDisposable
         GC.SuppressFinalize(this);
     }
 
-    public IRepository<TEntity, T> GetRepository<TEntity, T>()
-                        where TEntity : class, new()
-                        where T : IComparable, IEquatable<T>
+    public IRepository<TEntity> GetRepository<TEntity>() where TEntity : class, new()
     {
         if (repositories.ContainsKey(typeof(TEntity)))
         {
-            return (IRepository<TEntity, T>)repositories[typeof(TEntity)];
+            return (IRepository<TEntity>)repositories[typeof(TEntity)];
         }
 
-        var repository = new Repository<TEntity, T, TContext>(context);
+        var repository = new Repository<TEntity, TContext>(context);
         repositories.Add(typeof(TEntity), repository);
         return repository;
     }

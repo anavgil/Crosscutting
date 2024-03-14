@@ -17,7 +17,7 @@ public static class ApiResponseExtensions
             {
                 responseBase.ErrorMessages.Add(new ApiError(string.Empty, error.Message));
 
-                foreach(var reason in  error.Reasons)
+                foreach (var reason in error.Reasons)
                 {
                     responseBase.ErrorMessages.Add(new ApiError(string.Empty, reason.Message));
                 }

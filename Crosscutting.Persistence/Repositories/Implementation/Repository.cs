@@ -90,6 +90,13 @@ public class Repository<TEntity, T, TContext> : IRepository<TEntity, T>
         return DbSet.SingleOrDefault(condition);
     }
 
+    public async Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> condition)
+    {
+        ArgumentNullException.ThrowIfNull(condition);
+
+        return await DbSet.SingleOrDefaultAsync(condition);
+    }
+
     public void Update(TEntity entity)
     {
         ArgumentNullException.ThrowIfNull(entity);

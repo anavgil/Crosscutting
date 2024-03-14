@@ -22,6 +22,7 @@ public interface IRepository<TEntity, T>
                                     CancellationToken ct = default);
 
     TEntity GetSingle(Expression<Func<TEntity, bool>> condition);
+    Task<TEntity> GetSingleAsync(Expression<Func<TEntity, bool>> condition);
     void Add(TEntity entity);
     void Add(IEnumerable<TEntity> entities);
     void Update(TEntity entity);

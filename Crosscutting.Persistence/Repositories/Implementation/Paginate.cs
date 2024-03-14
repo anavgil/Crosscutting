@@ -3,20 +3,13 @@ using System.Collections;
 
 namespace Crosscutting.Persistence.Repositories.Implementation;
 
-public class Paginate<TEntity> : IReadOnlyList<TEntity>,
+public class Paginate<TEntity>(IEnumerable<TEntity> items, int count, int pageNumber, int pageSize) : IReadOnlyList<TEntity>,
                                 IPaginate<TEntity> where TEntity : class, new()
 {
-    private readonly IList<TEntity> subset;
+    private readonly IList<TEntity> subset = items as IList<TEntity> ?? new List<TEntity>(items);
 
-    public Paginate(IEnumerable<TEntity> items, int count, int pageNumber, int pageSize)
-    {
-        PageNumber = pageNumber;
-        TotalPages = (int)Math.Ceiling(count / (double)pageSize);
-        subset = items as IList<TEntity> ?? new List<TEntity>(items);
-    }
-
-    public int PageNumber { get; }
-    public int TotalPages { get; }
+    public int PageNumber { get; } = pageNumber;
+    public int TotalPages { get; } = (int)Math.Ceiling(count / (double)pageSize);
 
     public TEntity this[int index] => subset[index];
 

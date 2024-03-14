@@ -26,4 +26,6 @@ public interface IRepository<TEntity>
     void Update(IEnumerable<TEntity> entities);
     void Delete(TEntity entity);
     void Delete(IEnumerable<TEntity> entities);
+
+    Task<IEnumerable<TObject>> GetSQLQueryResult<TObject>(string query, CancellationToken ct = default);
 }

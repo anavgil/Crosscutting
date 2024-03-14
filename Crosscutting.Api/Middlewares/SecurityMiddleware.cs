@@ -1,23 +1,23 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Primitives;
 
 namespace Crosscutting.Api.Middlewares;
 
-public class SecurityMiddleware
+public class SecurityMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-    public SecurityMiddleware(RequestDelegate next)
-    {
-        _next = next;
-    }
+    private readonly RequestDelegate _next = next;
 
     public async Task InvokeAsync(HttpContext context)
     {
-
+        context.Response.Headers.Remove("Server");
+        context.Response.Headers.Remove("X-Powered-By");
+        context.Response.Headers.Remove("X-AspNet-Version");
+        context.Response.Headers.Remove("X-AspNetMvc-Version");
         //Avoid Click Jacking
-        context.Response.Headers.Append("X-Frame-Options", "DENY");
+        context.Response.Headers.Append("X-Frame-Options", new StringValues("DENY"));
         //Avoid MIME Sniffing
-        context.Response.Headers.Append("X-Content-Type-Options", "nosniff");
+        context.Response.Headers.Append("X-Content-Type-Options", new StringValues("nosniff"));
         //Avoid Cross Site Scripting(XSS)
         context.Response.Headers.Append("X-Xss-Protection", "1; mode=block");
         context.Response.Headers.Append("Referrer-Policy", "no-referrer");

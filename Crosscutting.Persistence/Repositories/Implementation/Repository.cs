@@ -1,5 +1,8 @@
 ﻿using Crosscutting.Persistence.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System;
+using System.Linq;
 using System.Linq.Expressions;
 
 namespace Crosscutting.Persistence.Repositories.Implementation;
@@ -10,12 +13,14 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 {
     public const int PAGINATION_SIZE = 20;
     protected readonly DbSet<TEntity> DbSet;
+    protected readonly TContext _context;
 
     public Repository(TContext context)
     {
         ArgumentNullException.ThrowIfNull(context);
 
         DbSet = context.Set<TEntity>();
+        _context = context;
     }
 
     public void Add(TEntity entity)
@@ -77,9 +82,9 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         if (filter != null) query = query.Where(filter);
 
         if (orderBy != null)
-            return await orderBy(query).ToPagedListAsync<TEntity>(index, PAGINATION_SIZE, ct);
+            return await orderBy(query).ToPagedListAsync(index, PAGINATION_SIZE, ct);
 
-        return await query.ToPagedListAsync<TEntity>(index, PAGINATION_SIZE, ct);
+        return await query.ToPagedListAsync(index, PAGINATION_SIZE, ct);
     }
 
     public TEntity GetSingle(Expression<Func<TEntity, bool>> condition)
@@ -107,4 +112,13 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         ArgumentNullException.ThrowIfNull(entities);
         DbSet.UpdateRange(entities);
     }
+
+    public async Task<IEnumerable<TObject>> GetSQLQueryResult<TObject>(string query, CancellationToken ct = default)
+    {
+        var querySQL = await _context.Database.SqlQuery<TObject>($"{query}").ToListAsync(ct);
+
+        return querySQL;
+    }
+
+
 }

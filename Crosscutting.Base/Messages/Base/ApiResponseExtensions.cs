@@ -10,7 +10,7 @@ public static class ApiResponseExtensions
             Data = result.ValueOrDefault
         };
 
-        if (result.IsFailed && result.Errors.Count != 0) { }
+        if (result.IsFailed && result.Errors.Count != 0)
         {
             foreach (var error in result.Errors)
             {

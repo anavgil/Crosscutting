@@ -21,7 +21,7 @@ public static class ServiceCollectionExtensions
         var config = TypeAdapterConfig.GlobalSettings;
 
         var assembly = Assembly.GetEntryAssembly();
-        var applicationAssembly = assembly.GetReferencedAssemblies()
+        var applicationAssembly = assembly!.GetReferencedAssemblies()
                                     .Where(x => x.FullName.Contains("Application"))
                                     .FirstOrDefault();
 
@@ -49,7 +49,7 @@ public static class ServiceCollectionExtensions
         if (!string.IsNullOrWhiteSpace(configurationAssemblyName))
         {
             var assembly = Assembly.GetEntryAssembly();
-            var applicationAssembly = assembly.GetReferencedAssemblies()
+            var applicationAssembly = assembly!.GetReferencedAssemblies()
                                         .Where(x => x.FullName.Contains(configurationAssemblyName))
                                         .FirstOrDefault();
 

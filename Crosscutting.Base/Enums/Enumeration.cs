@@ -9,14 +9,14 @@ namespace Crosscutting.Base.Enums
         protected Enumeration(int id, string name) => (Id, Name) = (id, name); public override string ToString() => Name;
         public static IEnumerable<T> GetAll<T>() where T : Enumeration =>
                 typeof(T).GetFields(BindingFlags.Public | BindingFlags.Static | BindingFlags.DeclaredOnly).Select(f => f.GetValue(null)).Cast<T>();
-        public override bool Equals(object obj)
+        public override bool Equals(object? obj)
         {
             if (obj is not Enumeration otherValue)
             { return false; }
             var typeMatches = GetType().Equals(obj.GetType());
             var valueMatches = Id.Equals(otherValue.Id); return typeMatches && valueMatches;
         }
-        public int CompareTo(object other) => Id.CompareTo(((Enumeration)other).Id);
+        public int CompareTo(object? other) => Id.CompareTo(((Enumeration)other!).Id);
 
         public override int GetHashCode()
         {
@@ -25,9 +25,9 @@ namespace Crosscutting.Base.Enums
 
         public static bool operator ==(Enumeration left, Enumeration right)
         {
-            if (ReferenceEquals(left, null))
+            if (left is null)
             {
-                return ReferenceEquals(right, null);
+                return right is null;
             }
 
             return left.Equals(right);
@@ -40,22 +40,22 @@ namespace Crosscutting.Base.Enums
 
         public static bool operator <(Enumeration left, Enumeration right)
         {
-            return ReferenceEquals(left, null) ? !ReferenceEquals(right, null) : left.CompareTo(right) < 0;
+            return left is null ? right is not null : left.CompareTo(right) < 0;
         }
 
         public static bool operator <=(Enumeration left, Enumeration right)
         {
-            return ReferenceEquals(left, null) || left.CompareTo(right) <= 0;
+            return left is null || left.CompareTo(right) <= 0;
         }
 
         public static bool operator >(Enumeration left, Enumeration right)
         {
-            return !ReferenceEquals(left, null) && left.CompareTo(right) > 0;
+            return left is not null && left.CompareTo(right) > 0;
         }
 
         public static bool operator >=(Enumeration left, Enumeration right)
         {
-            return ReferenceEquals(left, null) ? ReferenceEquals(right, null) : left.CompareTo(right) >= 0;
+            return left is null ? right is null : left.CompareTo(right) >= 0;
         }
     }
 }

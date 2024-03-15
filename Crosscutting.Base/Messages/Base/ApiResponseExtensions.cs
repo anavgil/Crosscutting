@@ -2,7 +2,7 @@
 
 public static class ApiResponseExtensions
 {
-    public static ApiResponseBase<T> ToApiResponseBase<T>(this FluentResults.IResult<T> result)
+    public static ApiResponseBase<T> ToApiResponseBase<T>(this FluentResults.IResult<T> result) where T : class?
     {
         ApiResponseBase<T> responseBase = new()
         {

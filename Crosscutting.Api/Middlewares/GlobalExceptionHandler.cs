@@ -15,8 +15,6 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
         _logger.LogError(exception,
             "Error Message: {}, Time  of occurrence {time}", exceptionMessage, DateTime.UtcNow);
 
-        httpContext.Response.StatusCode = (int)HttpStatusCode.BadRequest;
-
         var problemDetails = new ProblemDetails
         {
             Status = (int)HttpStatusCode.BadRequest,

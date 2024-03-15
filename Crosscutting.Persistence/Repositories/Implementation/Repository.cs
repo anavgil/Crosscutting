@@ -1,8 +1,5 @@
 ﻿using Crosscutting.Persistence.Abstractions.Repositories;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using System;
-using System.Linq;
 using System.Linq.Expressions;
 
 namespace Crosscutting.Persistence.Repositories.Implementation;

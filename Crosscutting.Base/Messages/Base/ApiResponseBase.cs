@@ -18,8 +18,8 @@ public interface IApiResponseBaseScalar<T> where T : struct
 
 public record ApiResponseBase<T> : IApiResponseBase, IApiResponseBaseReadOnly<T> where T : class?
 {
-    public bool IsSuccess { get;  set; }
-    public List<ApiError>? ErrorMessages { get;  set; }
+    public bool IsSuccess { get; set; }
+    public List<ApiError>? ErrorMessages { get; set; }
     public T? Data { get; set; }
 }
 
@@ -30,4 +30,4 @@ public record ApiResponseBaseScalar<T> : IApiResponseBase, IApiResponseBaseScala
     public T? Data { get; set; }
 }
 
-public record ApiError(string Code, string Description){}
+public record ApiError(string Code, string Description) { }

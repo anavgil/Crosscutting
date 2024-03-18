@@ -4,13 +4,13 @@ public interface IApiResponsePaged
 {
     int PageNumber { get; set; }
 
-     int TotalPages { get; set; }
+    int TotalPages { get; set; }
 
-     bool IsFirstPage { get; set; }
+    bool IsFirstPage { get; set; }
 
-     bool IsLastPage{ get; set; }
+    bool IsLastPage { get; set; }
 
-     int Count{ get; set; }
+    int Count { get; set; }
 }
 
 public interface IApiResponseBase

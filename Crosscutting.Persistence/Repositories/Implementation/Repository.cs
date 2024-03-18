@@ -1,4 +1,5 @@
 ﻿using Crosscutting.Persistence.Abstractions.Repositories;
+using Crosscutting.Persistence.Extensions;
 using Microsoft.EntityFrameworkCore;
 using System.Linq.Expressions;
 

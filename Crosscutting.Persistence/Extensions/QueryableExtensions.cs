@@ -1,10 +1,32 @@
-﻿using System.Linq.Expressions;
+﻿using Crosscutting.Persistence.Repositories.Implementation;
+using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 using System.Reflection;
 
 namespace Crosscutting.Persistence.Extensions;
 
 public static class QueryableExtensions
 {
+    public static async Task<Paginate<TEntity>> ToPagedListAsync<TEntity>(
+    this IQueryable<TEntity> source,
+    int page,
+    int pageSize,
+    CancellationToken token = default) where TEntity : class, new()
+    {
+        var count = await source.CountAsync(token);
+        if (count > 0)
+        {
+            var items = await source
+                .Skip((page - 1) * pageSize)
+                .Take(pageSize)
+                .ToListAsync(token);
+
+            return new Paginate<TEntity>(items, count, page, pageSize);
+        }
+
+        return new([], 0, 0, 0);
+    }
+
     private static readonly MethodInfo ContainsGenericMethod = typeof(Enumerable)
         .GetMethods()
         .Single(m => m.Name == "Contains" && m.GetParameters().Length == 2);

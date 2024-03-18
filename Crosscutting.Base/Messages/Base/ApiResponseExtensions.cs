@@ -54,9 +54,9 @@ public static class ApiResponseExtensions
         return responseBase;
     }
 
-    public static ApiResponseBasePaged<IEnumerable<Y?>> ToApiResponseBasePaged<T,Y>(this FluentResults.IResult<T> result)
+    public static ApiResponseBasePaged<IEnumerable<Y?>> ToApiResponseBasePaged<T, Y>(this FluentResults.IResult<T> result)
         where T : class?, IPagedResult<Y>
-        where Y: class?
+        where Y : class?
     {
         ApiResponseBasePaged<IEnumerable<Y?>> responseBase = new()
         {

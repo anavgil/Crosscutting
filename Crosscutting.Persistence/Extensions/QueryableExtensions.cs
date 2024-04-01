@@ -39,7 +39,7 @@ public static class QueryableExtensions
     where TKey : notnull
     {
         var distinctValues = values.Distinct().ToArray();
-        if (!distinctValues.Any())
+        if (distinctValues.Length == 0)
         {
             return queryable.Where(x => false);
         }
@@ -87,7 +87,7 @@ public static class QueryableExtensions
         where TKey : notnull
     {
         var distinctValues = values.Distinct().ToArray();
-        if (!distinctValues.Any())
+        if (distinctValues.Length == 0)
         {
             return queryable;
         }

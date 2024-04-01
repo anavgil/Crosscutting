@@ -12,7 +12,7 @@ public interface IPagedResult<T> where T : class?
 
     int Count { get; set; }
 
-    IReadOnlyCollection<T?> Items { get; set; }
+    IReadOnlyList<T?> Items { get; set; }
 }
 
 public class PagedResult<T> : IPagedResult<T> where T : class?
@@ -22,5 +22,5 @@ public class PagedResult<T> : IPagedResult<T> where T : class?
     public bool IsFirstPage { get; set; }
     public bool IsLastPage { get; set; }
     public int Count { get; set; }
-    public IReadOnlyCollection<T?> Items { get; set; } = [];
+    public IReadOnlyList<T?> Items { get; set; } = [];
 }

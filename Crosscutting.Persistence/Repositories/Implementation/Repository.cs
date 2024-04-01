@@ -80,9 +80,9 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         if (filter != null) query = query.Where(filter);
 
         if (orderBy != null)
-            return await orderBy(query).ToPagedListAsync(index, PAGINATION_SIZE, ct);
+            return await orderBy(query).ToPagedListAsync(index, size, ct);
 
-        return await query.ToPagedListAsync(index, PAGINATION_SIZE, ct);
+        return await query.ToPagedListAsync(index, size, ct);
     }
 
     public TEntity GetSingle(Expression<Func<TEntity, bool>> condition)

@@ -26,7 +26,7 @@ public static class ServiceCollectionExtensions
         //                            .FirstOrDefault();
 
         if (assembly is not null)
-            config.Scan(Assembly.Load(assembly.GetName()));
+            config.Scan(assembly);
 
 
         return services;

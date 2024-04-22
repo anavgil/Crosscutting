@@ -20,14 +20,13 @@ public static class ServiceCollectionExtensions
     {
         var config = TypeAdapterConfig.GlobalSettings;
 
-        //var assembly = Assembly.GetEntryAssembly();
         var assembly = Assembly.GetExecutingAssembly();
-        var applicationAssembly = assembly!.GetReferencedAssemblies()
-                                    .Where(x => x.FullName.Contains("Application"))
-                                    .FirstOrDefault();
+        //var applicationAssembly = assembly!.GetReferencedAssemblies()
+        //                            .Where(x => x.FullName.Contains("Application"))
+        //                            .FirstOrDefault();
 
-        if (applicationAssembly is not null)
-            config.Scan(Assembly.Load(applicationAssembly));
+        if (assembly is not null)
+            config.Scan(Assembly.Load(assembly.GetName()));
 
 
         return services;

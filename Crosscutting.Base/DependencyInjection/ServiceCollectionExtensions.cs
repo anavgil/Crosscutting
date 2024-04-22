@@ -20,7 +20,8 @@ public static class ServiceCollectionExtensions
     {
         var config = TypeAdapterConfig.GlobalSettings;
 
-        var assembly = Assembly.GetEntryAssembly();
+        //var assembly = Assembly.GetEntryAssembly();
+        var assembly = Assembly.GetExecutingAssembly();
         var applicationAssembly = assembly!.GetReferencedAssemblies()
                                     .Where(x => x.FullName.Contains("Application"))
                                     .FirstOrDefault();

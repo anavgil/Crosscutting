@@ -15,12 +15,14 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
         _logger.LogError(exception,
             "Error Message: {}, Time  of occurrence {time}", exceptionMessage, DateTime.UtcNow);
 
+        var statusCode = GetStatuscodeFromException(exception);
+
         var problemDetails = new ProblemDetails
         {
-            Status = (int)HttpStatusCode.BadRequest,
-            Title = "An error occurred",
+            Status = statusCode,
+            Title = exception.GetType().Name,
             Detail = exception.Message,
-            Type = exception.GetType().Name
+            Instance = httpContext.Request.Path
         };
 
         if (exception.InnerException is not null)
@@ -38,4 +40,10 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
         return true;
 
     }
+
+    private int GetStatuscodeFromException(Exception exception) => exception switch
+    {
+        BadHttpRequestException => StatusCodes.Status400BadRequest,
+        _ => StatusCodes.Status500InternalServerError
+    };
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Net.Http.Headers;
 
 namespace Crosscutting.Api.Middlewares;
 
@@ -21,6 +22,7 @@ public class SecurityMiddleware(RequestDelegate next)
         //Avoid Cross Site Scripting(XSS)
         context.Response.Headers.Append("X-Xss-Protection", "1; mode=block");
         context.Response.Headers.Append("Referrer-Policy", "no-referrer");
+        context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store";
         //context.Response.Headers.Add("Content-Security-Policy", "default-src 'self';");
         //context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'");
 

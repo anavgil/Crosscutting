@@ -1,14 +1,23 @@
 ﻿using Carter;
 using Crosscutting.Api.DependencyInjection;
 using Crosscutting.Api.Middlewares;
+using Crosscutting.Api.Options;
 using Crosscutting.Common.Configurations.Global;
 using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using OpenTelemetry;
+using OpenTelemetry.Metrics;
+using OpenTelemetry.Resources;
+using OpenTelemetry.Trace;
 using Serilog;
+using System.Diagnostics.Metrics;
 using System.Globalization;
 using System.Reflection;
 using System.Threading.RateLimiting;
@@ -77,9 +86,13 @@ public static class ServiceCollectionExtensions
         if (settings.UseCarter)
             services.AddCarterDependencies();
 
+        if (settings.UseOpenTelemetry)
+            services.AddOpenTelemetryDependencies(null);
+
         return services;
     }
 
+    #region Private methods
     private static IServiceCollection AddCors(this IServiceCollection services)
     {
         return services.AddCors(options =>
@@ -145,4 +158,84 @@ public static class ServiceCollectionExtensions
                 .Where(t => !t.GetTypeInfo().IsAbstract && typeof(IValidator).IsAssignableFrom(t))
                 .ToArray();
     }
+
+    private static IServiceCollection AddOpenTelemetryDependencies(this IServiceCollection services,IConfiguration configuration)
+    {
+
+        ObservabilityOptions observabilityOptions = new();
+
+        configuration
+            .GetRequiredSection(nameof(ObservabilityOptions))
+            .Bind(observabilityOptions);
+
+        services.AddOpenTelemetry()
+                .AddTracing(observabilityOptions)
+                .AddMetrics(observabilityOptions)
+                ;
+
+        return services;
+    }
+
+    private static IOpenTelemetryBuilder AddTracing(this IOpenTelemetryBuilder builder, ObservabilityOptions observabilityOptions) 
+    {
+        builder.WithTracing(tracing =>
+        {
+            tracing
+                     .AddSource(observabilityOptions.ServiceName)
+                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(observabilityOptions.ServiceName))
+                     .SetErrorStatusOnException()
+                     .SetSampler(new AlwaysOnSampler())
+                     .AddHttpClientInstrumentation()
+                     .AddAspNetCoreInstrumentation(options =>
+                     {
+                         //options.EnableGrpcAspNetCoreSupport = true;
+                         options.RecordException = true;
+                     });
+
+            /* Add more instrument here: MassTransit, NgSql ... */
+
+            /* ============== */
+            /* Only export to OpenTelemetry collector */
+            /* ============== */
+            tracing
+                    .AddOtlpExporter(options =>
+                    {
+                        options.Endpoint = observabilityOptions.CollectorUri;
+                        options.ExportProcessorType = ExportProcessorType.Batch;
+                        options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                    });
+        });
+
+        return builder;
+    }
+
+    private static IOpenTelemetryBuilder AddMetrics(this IOpenTelemetryBuilder builder, ObservabilityOptions observabilityOptions)
+    {
+        builder.WithMetrics(metrics =>
+        {
+            var meter = new Meter(observabilityOptions.ServiceName);
+
+            metrics
+                     .AddMeter(meter.Name)
+                     .SetResourceBuilder(ResourceBuilder.CreateDefault().AddService(meter.Name))
+                     .AddAspNetCoreInstrumentation();
+
+            /* Add more instrument here */
+
+            /* ============== */
+            /* Only export to OpenTelemetry collector */
+            /* ============== */
+
+            metrics
+                    .AddOtlpExporter(options =>
+                    {
+                        options.Endpoint = observabilityOptions.CollectorUri;
+                        options.ExportProcessorType = ExportProcessorType.Batch;
+                        options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                    });
+        });
+
+        return builder;
+    }
+    #endregion
 }

@@ -49,6 +49,7 @@ public static class ApplicationBuilderExtensions
         return app;
     }
 
+    #region Private methods
     private static IApplicationBuilder UseCarterMiddleware(this IApplicationBuilder app)
     {
         app.UseEndpoints(endpoints =>
@@ -77,4 +78,6 @@ public static class ApplicationBuilderExtensions
 
         return app;
     }
+
+    #endregion
 }

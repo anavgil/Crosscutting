@@ -28,4 +28,6 @@ public interface IRepository<TEntity>
     void Delete(IEnumerable<TEntity> entities);
 
     Task<IEnumerable<TObject>> GetSQLQueryResult<TObject>(string query, CancellationToken ct = default);
+
+    IEnumerable<TEntity> FindWithSpecificationPattern(ISpecification<TEntity> specification = null);
 }

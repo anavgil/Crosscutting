@@ -25,27 +25,27 @@ using System.Threading.RateLimiting;
 namespace Crosscutting.Api.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
-    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services)
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, IConfiguration configuration)
     {
         GlobalSettings settings = new();
 
-        services.AddCrosscuttingApi(settings);
+        services.AddCrosscuttingApi(configuration,settings);
 
         return services;
     }
 
-    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, Action<GlobalSettings> setupSettings = null)
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services,IConfiguration configuration, Action<GlobalSettings> setupSettings = null)
     {
         GlobalSettings settings = new();
 
         setupSettings?.Invoke(settings);
 
-        services.AddCrosscuttingApi(settings);
+        services.AddCrosscuttingApi(configuration,settings);
 
         return services;
     }
 
-    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, GlobalSettings settings)
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, IConfiguration configuration, GlobalSettings settings)
     {
         services.AddAntiforgery(options => { options.SuppressXFrameOptionsHeader = true; })
                 .AddExceptionHandler<GlobalExceptionHandler>()
@@ -87,7 +87,7 @@ public static class ServiceCollectionExtensions
             services.AddCarterDependencies();
 
         if (settings.UseOpenTelemetry)
-            services.AddOpenTelemetryDependencies(null);
+            services.AddOpenTelemetryDependencies(configuration);
 
         return services;
     }

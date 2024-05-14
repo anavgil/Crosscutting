@@ -5,15 +5,15 @@ namespace Crosscutting.Persistence.Abstractions.Repositories;
 public interface IRepository<TEntity>
     where TEntity : class, new()
 {
-    Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>>? filter = null,
-                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-                                List<Expression<Func<TEntity, object>>>? includes = null,
+    Task<IReadOnlyList<TEntity>> GetAsync(Expression<Func<TEntity, bool>> filter = null,
+                                Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                List<Expression<Func<TEntity, object>>> includes = null,
                                 bool disableTracking = true,
                                 CancellationToken ct = default);
 
-    Task<IPaginate<TEntity>> GetPaginatedAsync(Expression<Func<TEntity, bool>>? filter = null,
-                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>>? orderBy = null,
-                                    List<Expression<Func<TEntity, object>>>? includes = null,
+    Task<IPaginate<TEntity>> GetPaginatedAsync(Expression<Func<TEntity, bool>> filter = null,
+                                    Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+                                    List<Expression<Func<TEntity, object>>> includes = null,
                                     int index = 0, int size = 0,
                                     bool disableTracking = true,
                                     CancellationToken ct = default);

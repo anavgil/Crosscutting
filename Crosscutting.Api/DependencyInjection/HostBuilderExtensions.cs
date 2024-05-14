@@ -29,7 +29,7 @@ public static class HostBuilderExtensions
             //}
         });
     }
-    public static IHostBuilder UseCrosscuttingLoggingWithOPT(this IHostBuilder builder,IConfiguration configuration)
+    public static IHostBuilder UseCrosscuttingLoggingWithOPT(this IHostBuilder builder, IConfiguration configuration)
     {
         ObservabilityOptions observabilityOptions = new();
 
@@ -73,5 +73,6 @@ public static class HostBuilderExtensions
                                                     {"value", 3.14}
                                                 };
             });
-        }
+        });
+    }
 }

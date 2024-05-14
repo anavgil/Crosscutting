@@ -8,8 +8,6 @@ using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Microsoft.EntityFrameworkCore.Scaffolding.Internal;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using OpenTelemetry;
@@ -29,18 +27,18 @@ public static class ServiceCollectionExtensions
     {
         GlobalSettings settings = new();
 
-        services.AddCrosscuttingApi(configuration,settings);
+        services.AddCrosscuttingApi(configuration, settings);
 
         return services;
     }
 
-    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services,IConfiguration configuration, Action<GlobalSettings> setupSettings = null)
+    public static IServiceCollection AddCrosscuttingApi(this IServiceCollection services, IConfiguration configuration, Action<GlobalSettings> setupSettings = null)
     {
         GlobalSettings settings = new();
 
         setupSettings?.Invoke(settings);
 
-        services.AddCrosscuttingApi(configuration,settings);
+        services.AddCrosscuttingApi(configuration, settings);
 
         return services;
     }
@@ -159,7 +157,7 @@ public static class ServiceCollectionExtensions
                 .ToArray();
     }
 
-    private static IServiceCollection AddOpenTelemetryDependencies(this IServiceCollection services,IConfiguration configuration)
+    private static IServiceCollection AddOpenTelemetryDependencies(this IServiceCollection services, IConfiguration configuration)
     {
 
         ObservabilityOptions observabilityOptions = new();
@@ -176,7 +174,7 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IOpenTelemetryBuilder AddTracing(this IOpenTelemetryBuilder builder, ObservabilityOptions observabilityOptions) 
+    private static IOpenTelemetryBuilder AddTracing(this IOpenTelemetryBuilder builder, ObservabilityOptions observabilityOptions)
     {
         builder.WithTracing(tracing =>
         {

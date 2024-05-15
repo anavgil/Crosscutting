@@ -1,7 +1,6 @@
-﻿using Crosscutting.Persistence.Abstractions.Repositories;
-using System.Linq.Expressions;
+﻿using System.Linq.Expressions;
 
-namespace Crosscutting.Persistence.Repositories.Implementation;
+namespace Crosscutting.Persistence.Abstractions.Specifications;
 
 public class Specification<TEntity> : ISpecification<TEntity> where TEntity : class
 {
@@ -9,6 +8,11 @@ public class Specification<TEntity> : ISpecification<TEntity> where TEntity : cl
     public new List<Expression<Func<TEntity, object>>> Includes { get; } = [];
     public new Expression<Func<TEntity, object>> OrderBy { get; private set; }
     public new Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+    public new Expression<Func<TEntity, object>> GroupBy { get; private set; }
+
+    public new int Take { get; private set; }
+    public new int Skip { get; private set; }
+    public new bool IsPagingEnabled { get; private set; } = false;
 
     public Specification()
     {
@@ -24,6 +28,11 @@ public class Specification<TEntity> : ISpecification<TEntity> where TEntity : cl
         Includes.Add(includeExpression);
     }
 
+    protected void AddInclude(string includeString)
+    {
+        IncludeStrings.Add(includeString);
+    }
+
     protected void AddOrderBy(Expression<Func<TEntity, object>> orderByExpression)
     {
         OrderBy = orderByExpression;
@@ -32,5 +41,17 @@ public class Specification<TEntity> : ISpecification<TEntity> where TEntity : cl
     protected void AddOrderByDescending(Expression<Func<TEntity, object>> orderByDescExpression)
     {
         OrderByDescending = orderByDescExpression;
+    }
+
+    protected void ApplyGroupBy(Expression<Func<TEntity, object>> groupByExpression)
+    {
+        GroupBy = groupByExpression;
+    }
+
+    protected void ApplyPaging(int skip, int take)
+    {
+        Skip = skip;
+        Take = take;
+        IsPagingEnabled = true;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System.Linq.Expressions;
+using Crosscutting.Persistence.Abstractions.Specifications;
 
 namespace Crosscutting.Persistence.Abstractions.Repositories;
 

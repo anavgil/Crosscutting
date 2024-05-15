@@ -1,4 +1,6 @@
-﻿using Crosscutting.Persistence.Abstractions.UoW;
+﻿using Crosscutting.Persistence.Abstractions.Repositories;
+using Crosscutting.Persistence.Abstractions.UoW;
+using Crosscutting.Persistence.Repositories.Implementation;
 using Crosscutting.Persistence.UoW.Implementation;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

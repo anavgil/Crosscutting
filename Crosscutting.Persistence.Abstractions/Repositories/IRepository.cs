@@ -30,5 +30,5 @@ public interface IRepository<TEntity>
 
     Task<IEnumerable<TObject>> GetSQLQueryResult<TObject>(string query, CancellationToken ct = default);
 
-    IEnumerable<TEntity> FindWithSpecificationPattern(ISpecification<TEntity> specification = null);
+    IEnumerable<TEntity> FindWithSpecificationPattern(ISpecification<TEntity> specification);
 }

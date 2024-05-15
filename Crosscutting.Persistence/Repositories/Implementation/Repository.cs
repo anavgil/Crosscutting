@@ -120,7 +120,7 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
         return querySQL;
     }
 
-    public IEnumerable<TEntity> FindWithSpecificationPattern(ISpecification<TEntity> specification = null)
+    public IEnumerable<TEntity> FindWithSpecificationPattern(ISpecification<TEntity> specification)
     {
         return SpecificationBuilder<TEntity>.GetQuery(DbSet.AsQueryable(), specification);
     }

@@ -11,7 +11,7 @@ public class SpecificationBuilder<TEntity> where TEntity : class
 
 
         // modify the IQueryable using the specification's criteria expression
-        if (spec.Criteria != null)
+        if (spec.Criteria is not null)
         {
             query = query.Where(spec.Criteria);
         }
@@ -25,16 +25,16 @@ public class SpecificationBuilder<TEntity> where TEntity : class
                                 (current, include) => current.Include(include));
 
         // Apply ordering if expressions are set
-        if (spec.OrderBy != null)
+        if (spec.OrderBy is not null)
         {
             query = query.OrderBy(spec.OrderBy);
         }
-        else if (spec.OrderByDescending != null)
+        else if (spec.OrderByDescending is not null)
         {
             query = query.OrderByDescending(spec.OrderByDescending);
         }
 
-        if (spec.GroupBy != null)
+        if (spec.GroupBy is not null)
         {
             query = query.GroupBy(spec.GroupBy).SelectMany(x => x);
         }

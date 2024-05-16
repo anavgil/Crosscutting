@@ -25,7 +25,7 @@ public class SpecificationBuilder<TEntity> where TEntity : class
                                 (current, include) => current.Include(include));
 
         // Apply ordering if expressions are set
-        if (spec.OrderBy is not null)
+        if (spec.OrderBy != null)
         {
             query = query.OrderBy(spec.OrderBy);
         }

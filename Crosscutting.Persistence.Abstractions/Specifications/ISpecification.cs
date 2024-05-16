@@ -4,16 +4,16 @@ namespace Crosscutting.Persistence.Abstractions.Specifications;
 
 public class ISpecification<TEntity>
 {
-    Expression<Func<TEntity, bool>> Criteria { get; }
-    List<Expression<Func<TEntity, object>>> Includes { get; }
-    Expression<Func<TEntity, object>> OrderBy { get; }
-    Expression<Func<TEntity, object>> OrderByDescending { get; }
+    public Expression<Func<TEntity, bool>> Criteria { get; }
+    public List<Expression<Func<TEntity, object>>> Includes { get; }
+    public Expression<Func<TEntity, object>> OrderBy { get; }
+    public Expression<Func<TEntity, object>> OrderByDescending { get; }
 
 
-    List<string> IncludeStrings { get; }
-    Expression<Func<TEntity, object>> GroupBy { get; }
+    public List<string> IncludeStrings { get; }
+    public Expression<Func<TEntity, object>> GroupBy { get; }
 
-    int Take { get; }
-    int Skip { get; }
-    bool IsPagingEnabled { get; }
+    public int Take { get; }
+    public int Skip { get; }
+    public bool IsPagingEnabled { get; }
 }

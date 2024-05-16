@@ -2,7 +2,7 @@
 
 namespace Crosscutting.Persistence.Abstractions.Specifications;
 
-public abstract class Specification<TEntity> : ISpecification<TEntity>
+public abstract class Specification<TEntity> : ISpecification<TEntity> where TEntity : class
 {
     public Expression<Func<TEntity, bool>> Criteria { get; }
     public List<Expression<Func<TEntity, object>>> Includes { get; } = [];

@@ -2,17 +2,18 @@
 
 namespace Crosscutting.Persistence.Abstractions.Specifications;
 
-public abstract class Specification<TEntity> : ISpecification<TEntity> where TEntity : class
+public abstract class Specification<TEntity> : ISpecification<TEntity>
 {
-    public new Expression<Func<TEntity, bool>> Criteria { get; private set; }
-    public new List<Expression<Func<TEntity, object>>> Includes { get; } = [];
-    public new Expression<Func<TEntity, object>> OrderBy { get; private set; }
-    public new Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
-    public new Expression<Func<TEntity, object>> GroupBy { get; private set; }
+    public Expression<Func<TEntity, bool>> Criteria { get; }
+    public List<Expression<Func<TEntity, object>>> Includes { get; } = [];
+    public List<string> IncludeStrings { get; } = [];
+    public Expression<Func<TEntity, object>> OrderBy { get; private set; }
+    public Expression<Func<TEntity, object>> OrderByDescending { get; private set; }
+    public Expression<Func<TEntity, object>> GroupBy { get; private set; }
 
-    public new int Take { get; private set; }
-    public new int Skip { get; private set; }
-    public new bool IsPagingEnabled { get; private set; } = false;
+    public int Take { get; private set; }
+    public int Skip { get; private set; }
+    public bool IsPagingEnabled { get; private set; } = false;
 
     public Specification()
     {

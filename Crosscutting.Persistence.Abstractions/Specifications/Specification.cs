@@ -4,7 +4,7 @@ namespace Crosscutting.Persistence.Abstractions.Specifications;
 
 public abstract class Specification<TEntity> : ISpecification<TEntity> where TEntity : class
 {
-    public new Expression<Func<TEntity, bool>> Criteria { get; }
+    public new Expression<Func<TEntity, bool>> Criteria { get; private set; }
     public new List<Expression<Func<TEntity, object>>> Includes { get; } = [];
     public new Expression<Func<TEntity, object>> OrderBy { get; private set; }
     public new Expression<Func<TEntity, object>> OrderByDescending { get; private set; }

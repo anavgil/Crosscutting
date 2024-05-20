@@ -1,4 +1,5 @@
-﻿using Carter;
+﻿using Asp.Versioning;
+using Carter;
 using Crosscutting.Api.DependencyInjection;
 using Crosscutting.Api.Middlewares;
 using Crosscutting.Api.Options;
@@ -86,6 +87,9 @@ public static class ServiceCollectionExtensions
 
         if (settings.UseOpenTelemetry)
             services.AddOpenTelemetryDependencies(configuration);
+
+        if (settings.UseApiVersioning)
+            services.AddApiVersioning();
 
         return services;
     }
@@ -234,6 +238,25 @@ public static class ServiceCollectionExtensions
         });
 
         return builder;
+    }
+
+    private static IServiceCollection AddApiVersioning(this IServiceCollection services)
+    {
+        services.AddApiVersioning(options =>
+        {
+            options.DefaultApiVersion = new ApiVersion(1);
+            options.ReportApiVersions = true;
+            options.AssumeDefaultVersionWhenUnspecified = true;
+            options.ApiVersionReader = ApiVersionReader.Combine(
+                new UrlSegmentApiVersionReader(),
+                new HeaderApiVersionReader("X-Api-Version"));
+        }).AddApiExplorer(options =>
+        {
+            options.GroupNameFormat = "'v'V";
+            options.SubstituteApiVersionInUrl = true;
+        });
+
+        return services;
     }
     #endregion
 }

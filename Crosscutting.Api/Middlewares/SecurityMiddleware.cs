@@ -9,6 +9,13 @@ public class SecurityMiddleware(RequestDelegate next)
 {
     private readonly RequestDelegate _next = next;
 
+    private readonly Dictionary<string, string> _cspPolicyCollection = new()
+    {
+        { "report","default-src 'self'; script-src 'self' 'unsafe-inline' scripts.ourdomain.com; style-src 'self' 'unsafe-inline' styles.ourdomain; img-src 'self' 'unsafe-inline' images.ourdomain.com; frame-ancestors 'none'" },
+        { "default-lite","default-src 'self'" },
+        { "default","default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'" }
+    };
+
     public async Task InvokeAsync(HttpContext context)
     {
         context.Response.Headers.Remove("Server");
@@ -23,10 +30,12 @@ public class SecurityMiddleware(RequestDelegate next)
         context.Response.Headers.Append("X-Xss-Protection", "1; mode=block");
         context.Response.Headers.Append("Referrer-Policy", "no-referrer");
         context.Response.Headers[HeaderNames.CacheControl] = "no-cache, no-store";
-        //context.Response.Headers.Add("Content-Security-Policy", "default-src 'self';");
-        //context.Response.Headers.Add("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; font-src 'self'; img-src 'self'; frame-src 'self'");
 
-
+#if DEBUG
+        context.Response.Headers.Append("Content-Security-Policy-Report-Only", new StringValues(_cspPolicyCollection["report"]));
+#else
+        context.Response.Headers.Append("Content-Security-Policy-Report-Only",new StringValues(_cspPolicyCollection["default"]));
+#endif
 
 
         await _next(context);

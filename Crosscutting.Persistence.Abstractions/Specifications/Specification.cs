@@ -15,11 +15,11 @@ public abstract class Specification<TEntity> : ISpecification<TEntity> where TEn
     public int Skip { get; private set; }
     public bool IsPagingEnabled { get; private set; } = false;
 
-    public Specification()
+    protected Specification()
     {
     }
 
-    public Specification(Expression<Func<TEntity, bool>> criteria)
+    protected Specification(Expression<Func<TEntity, bool>> criteria)
     {
         Criteria = criteria;
     }

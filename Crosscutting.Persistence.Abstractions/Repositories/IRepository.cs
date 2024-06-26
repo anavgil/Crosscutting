@@ -1,5 +1,5 @@
-﻿using System.Linq.Expressions;
-using Crosscutting.Persistence.Abstractions.Specifications;
+﻿using Crosscutting.Persistence.Abstractions.Specifications;
+using System.Linq.Expressions;
 
 namespace Crosscutting.Persistence.Abstractions.Repositories;
 

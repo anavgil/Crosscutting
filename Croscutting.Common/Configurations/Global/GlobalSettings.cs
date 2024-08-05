@@ -12,7 +12,7 @@ public class GlobalSettings
     {
         UseRateLimit = false;
         UseHealthChecks = false;
-        UseCarter = true;
+        UseCarter = false;
         UseOpenTelemetry = false;
         UseApiVersioning = false;
     }

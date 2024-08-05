@@ -1,10 +1,13 @@
 ﻿using Carter;
+using Crosscutting.Api.Endpoints;
 using Crosscutting.Api.Middlewares;
 using Crosscutting.Common.Configurations.Global;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Serilog;
 
@@ -45,6 +48,21 @@ public static class ApplicationBuilderExtensions
 
         if (settings.UseHealthChecks)
             app.UseHealthchecksMiddleware();
+
+        return app;
+    }
+
+    public static IApplicationBuilder MapEndpoints(this WebApplication app, RouteGroupBuilder routeGroupBuilder = null)
+    {
+        IEnumerable<IEndpoint> endpoints = app.Services
+                                            .GetRequiredService<IEnumerable<IEndpoint>>();
+
+        IEndpointRouteBuilder builder = routeGroupBuilder is null ? app : routeGroupBuilder;
+
+        foreach (IEndpoint endpoint in endpoints)
+        {
+            endpoint.MapEndpoint(builder);
+        }
 
         return app;
     }

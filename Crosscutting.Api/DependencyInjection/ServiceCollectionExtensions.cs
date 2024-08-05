@@ -1,6 +1,7 @@
 ﻿using Asp.Versioning;
 using Carter;
 using Crosscutting.Api.DependencyInjection;
+using Crosscutting.Api.Endpoints;
 using Crosscutting.Api.Middlewares;
 using Crosscutting.Api.Options;
 using Crosscutting.Common.Configurations.Global;
@@ -11,6 +12,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using OpenTelemetry;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -90,6 +92,21 @@ public static class ServiceCollectionExtensions
 
         if (settings.UseApiVersioning)
             services.AddApiVersioning();
+
+
+        return services;
+    }
+
+    public static IServiceCollection AddEndpoints(this IServiceCollection services, Assembly assembly)
+    {
+        ServiceDescriptor[] serviceDescriptors = assembly
+                                                .DefinedTypes
+                                                .Where(type => type is { IsAbstract: false, IsInterface: false } &&
+                                                               type.IsAssignableTo(typeof(IEndpoint)))
+                                                .Select(type => ServiceDescriptor.Transient(typeof(IEndpoint), type))
+                                                .ToArray();
+
+        services.TryAddEnumerable(serviceDescriptors);
 
         return services;
     }

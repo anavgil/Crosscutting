@@ -4,7 +4,6 @@ public class GlobalSettings
 {
     public bool UseRateLimit { get; internal set; }
     public bool UseHealthChecks { get; internal set; }
-    public bool UseCarter { get; internal set; }
     public bool UseOpenTelemetry { get; internal set; }
     public bool UseApiVersioning { get; internal set; }
 
@@ -12,7 +11,6 @@ public class GlobalSettings
     {
         UseRateLimit = false;
         UseHealthChecks = false;
-        UseCarter = false;
         UseOpenTelemetry = false;
         UseApiVersioning = false;
     }
@@ -27,12 +25,6 @@ public class GlobalSettings
     public GlobalSettings SetHealthChecks()
     {
         this.UseHealthChecks = true;
-        return this;
-    }
-
-    public GlobalSettings UnSetCarter()
-    {
-        this.UseCarter = false;
         return this;
     }
 

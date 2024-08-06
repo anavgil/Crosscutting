@@ -1,11 +1,9 @@
 ﻿using Asp.Versioning;
-using Carter;
 using Crosscutting.Api.DependencyInjection;
 using Crosscutting.Api.Endpoints;
 using Crosscutting.Api.Middlewares;
 using Crosscutting.Api.Options;
 using Crosscutting.Common.Configurations.Global;
-using FluentValidation;
 using HealthChecks.ApplicationStatus.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -84,8 +82,8 @@ public static class ServiceCollectionExtensions
         if (settings.UseHealthChecks)
             services.AddHealthCheckDependencies();
 
-        if (settings.UseCarter)
-            services.AddCarterDependencies();
+        //if (settings.UseCarter)
+        //    services.AddCarterDependencies();
 
         if (settings.UseOpenTelemetry)
             services.AddOpenTelemetryDependencies(configuration);
@@ -138,45 +136,45 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    private static IServiceCollection AddCarterDependencies(this IServiceCollection services)
-    {
-        services.AddCarter(configurator: c =>
-        {
-            c.WithModules(GetCarterModules());
-            //c.WithValidators(GetCarterValidation());
-            c.WithEmptyValidators();
-        });
+    //private static IServiceCollection AddCarterDependencies(this IServiceCollection services)
+    //{
+    //    services.AddCarter(configurator: c =>
+    //    {
+    //        c.WithModules(GetCarterModules());
+    //        //c.WithValidators(GetCarterValidation());
+    //        c.WithEmptyValidators();
+    //    });
 
-        return services;
-    }
+    //    return services;
+    //}
 
-    private static Type[] GetCarterModules()
-    {
-        var assembly = Assembly.GetEntryAssembly();
+    //private static Type[] GetCarterModules()
+    //{
+    //    var assembly = Assembly.GetEntryAssembly();
 
-        return assembly.GetTypes()
-                    .Where(t =>
-                            !t.IsAbstract &&
-                            typeof(ICarterModule).IsAssignableFrom(t) &&
-                            t != typeof(ICarterModule) &&
-                            t.IsPublic
-                        ).ToArray();
-    }
+    //    return assembly.GetTypes()
+    //                .Where(t =>
+    //                        !t.IsAbstract &&
+    //                        typeof(ICarterModule).IsAssignableFrom(t) &&
+    //                        t != typeof(ICarterModule) &&
+    //                        t.IsPublic
+    //                    ).ToArray();
+    //}
 
-    private static Type[] GetCarterValidation()
-    {
-        var assembly = Assembly.GetEntryAssembly();
-        var applicationAssembly = assembly.GetReferencedAssemblies()
-                                    .Where(x => x.FullName.Contains("Application"))
-                                    .FirstOrDefault();
+    //private static Type[] GetCarterValidation()
+    //{
+    //    var assembly = Assembly.GetEntryAssembly();
+    //    var applicationAssembly = assembly.GetReferencedAssemblies()
+    //                                .Where(x => x.FullName.Contains("Application"))
+    //                                .FirstOrDefault();
 
-        if (applicationAssembly is null)
-            return [];
+    //    if (applicationAssembly is null)
+    //        return [];
 
-        return Assembly.Load(applicationAssembly).GetTypes()
-                .Where(t => !t.GetTypeInfo().IsAbstract && typeof(IValidator).IsAssignableFrom(t))
-                .ToArray();
-    }
+    //    return Assembly.Load(applicationAssembly).GetTypes()
+    //            .Where(t => !t.GetTypeInfo().IsAbstract && typeof(IValidator).IsAssignableFrom(t))
+    //            .ToArray();
+    //}
 
     private static IServiceCollection AddOpenTelemetryDependencies(this IServiceCollection services, IConfiguration configuration)
     {

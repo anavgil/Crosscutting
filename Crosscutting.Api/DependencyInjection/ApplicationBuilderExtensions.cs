@@ -1,5 +1,4 @@
-﻿using Carter;
-using Crosscutting.Api.Endpoints;
+﻿using Crosscutting.Api.Endpoints;
 using Crosscutting.Api.Middlewares;
 using Crosscutting.Common.Configurations.Global;
 using HealthChecks.UI.Client;
@@ -43,8 +42,8 @@ public static class ApplicationBuilderExtensions
         if (settings.UseRateLimit)
             app.UseRateLimiter();
 
-        if (settings.UseCarter)
-            app.UseCarterMiddleware();
+        //if (settings.UseCarter)
+        //    app.UseCarterMiddleware();
 
         if (settings.UseHealthChecks)
             app.UseHealthchecksMiddleware();
@@ -68,15 +67,15 @@ public static class ApplicationBuilderExtensions
     }
 
     #region Private methods
-    private static IApplicationBuilder UseCarterMiddleware(this IApplicationBuilder app)
-    {
-        app.UseEndpoints(endpoints =>
-        {
-            endpoints.MapCarter();
-        });
+    //private static IApplicationBuilder UseCarterMiddleware(this IApplicationBuilder app)
+    //{
+    //    app.UseEndpoints(endpoints =>
+    //    {
+    //        endpoints.MapCarter();
+    //    });
 
-        return app;
-    }
+    //    return app;
+    //}
 
     private static IApplicationBuilder UseHealthchecksMiddleware(this IApplicationBuilder app)
     {

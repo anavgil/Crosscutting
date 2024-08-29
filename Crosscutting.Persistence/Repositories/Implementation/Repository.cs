@@ -56,7 +56,11 @@ public class Repository<TEntity, TContext> : IRepository<TEntity>
 
         if (disableTracking) query = query.AsNoTracking();
 
-        if (includes != null) query = includes.Aggregate(query, (current, include) => current.Include(include));
+        if (includes != null)
+        {
+            query = includes.Aggregate(query, (current, include) => current.Include(include));
+            query = query.AsSplitQuery();
+        }
 
         if (filter != null) query = query.Where(filter);
 

@@ -31,6 +31,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
                 { "INNER-Type",exception.InnerException.GetType().Name}
             };
 
+
         httpContext.Response.StatusCode = problemDetails.Status.Value;
 
         await httpContext.Response

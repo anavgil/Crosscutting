@@ -11,7 +11,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddMediatR(configuration =>
         {
-            configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            configuration.RegisterServicesFromAssembly(configurationAssembly);
             configuration.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
             configuration.AddOpenBehavior(typeof(RequestResponseLoggingBehavior<,>));
         });

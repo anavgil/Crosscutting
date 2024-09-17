@@ -36,8 +36,8 @@ public static class ApplicationBuilderExtensions
     public static IApplicationBuilder UseCrosscuttingApi(this IApplicationBuilder app, GlobalSettings settings)
     {
         app.UseSerilogRequestLogging();
-        app.UseRequestSecurity();
         app.UseExceptionHandler();
+        app.UseRequestSecurity();
 
         if (settings.UseRateLimit)
             app.UseRateLimiter();

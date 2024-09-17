@@ -16,7 +16,7 @@ public static class ServiceCollectionExtensions
             configuration.AddOpenBehavior(typeof(RequestResponseLoggingBehavior<,>));
         });
 
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
+        services.AddValidatorsFromAssembly(configurationAssembly)
                 .AddMapsterConfiguration(configurationAssembly)
                 .AddMapster();
 

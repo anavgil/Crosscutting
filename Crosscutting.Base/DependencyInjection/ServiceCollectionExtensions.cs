@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Crosscutting.Application.Behaviours;
+using FluentValidation;
 using Mapster;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -8,6 +9,13 @@ public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddApplicationCrosscutting(this IServiceCollection services, Assembly configurationAssembly)
     {
+        services.AddMediatR(configuration =>
+        {
+            configuration.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+            configuration.AddOpenBehavior(typeof(ValidationPipelineBehavior<,>));
+            configuration.AddOpenBehavior(typeof(RequestResponseLoggingBehavior<,>));
+        });
+
         services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly())
                 .AddMapsterConfiguration(configurationAssembly)
                 .AddMapster();

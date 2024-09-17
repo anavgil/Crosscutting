@@ -37,7 +37,7 @@ public static class ApplicationBuilderExtensions
     {
         app.UseSerilogRequestLogging();
         app.UseExceptionHandler();
-        app.UseRequestSecurity();
+        
 
         if (settings.UseRateLimit)
             app.UseRateLimiter();
@@ -47,6 +47,8 @@ public static class ApplicationBuilderExtensions
 
         if (settings.UseHealthChecks)
             app.UseHealthchecksMiddleware();
+
+        app.UseRequestSecurity();
 
         return app;
     }

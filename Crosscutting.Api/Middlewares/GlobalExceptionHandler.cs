@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.ComponentModel.DataAnnotations;
 
 namespace Crosscutting.Api.Middlewares;
 
@@ -44,6 +45,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
     private int GetStatuscodeFromException(Exception exception) => exception switch
     {
         BadHttpRequestException => StatusCodes.Status400BadRequest,
+        ValidationException => StatusCodes.Status400BadRequest,
         _ => StatusCodes.Status500InternalServerError
     };
 }

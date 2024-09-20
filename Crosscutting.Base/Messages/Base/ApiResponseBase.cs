@@ -1,6 +1,6 @@
 ﻿namespace Crosscutting.Application.Messages.Base;
 
-public interface IApiResponsePaged
+internal interface IApiResponsePaged
 {
     int PageNumber { get; set; }
 
@@ -13,18 +13,18 @@ public interface IApiResponsePaged
     int Count { get; set; }
 }
 
-public interface IApiResponseBase
+internal interface IApiResponseBase
 {
     bool IsSuccess { get; set; }
     List<ApiError>? ErrorMessages { get; set; }
 }
 
-public interface IApiResponseBaseReadOnly<T> where T : class?
+internal interface IApiResponseBaseReadOnly<T> where T : class?
 {
     T? Data { get; set; }
 }
 
-public interface IApiResponseBaseScalar<T> where T : struct
+internal interface IApiResponseBaseScalar<T> where T : struct
 {
     T? Data { get; set; }
 }

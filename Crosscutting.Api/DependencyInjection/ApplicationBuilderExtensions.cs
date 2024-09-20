@@ -37,7 +37,7 @@ public static class ApplicationBuilderExtensions
     {
         app.UseSerilogRequestLogging();
         app.UseExceptionHandler();
-        
+
 
         if (settings.UseRateLimit)
             app.UseRateLimiter();

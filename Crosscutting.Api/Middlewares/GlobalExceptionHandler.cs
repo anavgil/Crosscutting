@@ -1,8 +1,8 @@
-﻿using Microsoft.AspNetCore.Diagnostics;
+﻿using FluentValidation;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using System.ComponentModel.DataAnnotations;
 
 namespace Crosscutting.Api.Middlewares;
 
@@ -42,7 +42,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
 
     }
 
-    private int GetStatuscodeFromException(Exception exception) => exception switch
+    private static int GetStatuscodeFromException(Exception exception) => exception switch
     {
         BadHttpRequestException => StatusCodes.Status400BadRequest,
         ValidationException => StatusCodes.Status400BadRequest,

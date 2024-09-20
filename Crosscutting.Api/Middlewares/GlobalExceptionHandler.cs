@@ -1,4 +1,4 @@
-﻿using FluentValidation;
+﻿using Crosscutting.Common.Exceptions;
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -45,7 +45,7 @@ public class GlobalExceptionHandler(ILogger<GlobalExceptionHandler> _logger) : I
     private static int GetStatuscodeFromException(Exception exception) => exception switch
     {
         BadHttpRequestException => StatusCodes.Status400BadRequest,
-        ValidationException => StatusCodes.Status400BadRequest,
+        CustomValidationException => StatusCodes.Status400BadRequest,
         _ => StatusCodes.Status500InternalServerError
     };
 }

@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using Crosscutting.Common.Exceptions;
+using FluentValidation;
 using FluentValidation.Results;
 using MediatR;
 
@@ -42,7 +43,16 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
         //    return (TResponse)(object)Result.Fail(CreateValidationError(validationFailures));
         //}
 
-        throw new ValidationException(validationFailures);
+        //var arr = errors.Select(x => $"{Environment.NewLine} -- {x.PropertyName}: {x.ErrorMessage} Severity: {x.Severity.ToString()}");
+        var errorsItemCollection = validationFailures.Select(v => new ValidationErrorExceptionItem
+        {
+            Property = v.PropertyName,
+            Error = v.ErrorMessage,
+            Severity = v.Severity.ToString()
+        });
+
+        //throw new ValidationException(validationFailures);
+        throw new CustomValidationException(errorsItemCollection);
     }
 
     private async Task<ValidationFailure[]> ValidateAsync(TRequest request, CancellationToken cancellationToken)

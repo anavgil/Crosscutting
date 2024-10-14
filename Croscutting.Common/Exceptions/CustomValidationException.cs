@@ -10,7 +10,7 @@ public class CustomValidationException : Exception
     }
     private static string BuildErrorMessage(IEnumerable<ValidationErrorExceptionItem> errors)
     {
-        var arr = errors.Select(x => $"{Environment.NewLine} -- {x.Property}: {x.Error} Severity: {x.Severity.ToString()}");
+        var arr = errors.Select(x => $"{Environment.NewLine} -- {x.Property}: {x.Error} Severity: {x.Severity}");
         return "Validation failed: " + string.Join(string.Empty, arr);
     }
 }

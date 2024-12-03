@@ -1,11 +1,10 @@
-﻿using Crosscutting.Persistence.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Crosscutting.Persistence.Configurations;
+namespace Crosscutting.Domain.Configurations;
 
 public abstract class ConfigurationEntityBase<T> : IEntityTypeConfiguration<T>
-    where T : EntityBase
+    where T : class
 {
     public void Configure(EntityTypeBuilder<T> builder)
     {

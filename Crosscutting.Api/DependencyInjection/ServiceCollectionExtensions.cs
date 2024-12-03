@@ -59,7 +59,7 @@ public static class ServiceCollectionExtensions
 
                         context.ProblemDetails.Extensions.TryAdd("requestId", context.HttpContext.TraceIdentifier);
 
-                        Activity? activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
+                        Activity activity = context.HttpContext.Features.Get<IHttpActivityFeature>()?.Activity;
                         context.ProblemDetails.Extensions.TryAdd("traceId", activity?.Id);
 
                     };

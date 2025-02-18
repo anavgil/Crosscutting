@@ -67,10 +67,9 @@ internal sealed class ValidationPipelineBehavior<TRequest, TResponse>(
         ValidationResult[] validationResults = await Task.WhenAll(
                             validators.Select(validator => validator.ValidateAsync(context, cancellationToken))).ConfigureAwait(false);
 
-        ValidationFailure[] validationFailures = validationResults
+        ValidationFailure[] validationFailures = [.. validationResults
             .Where(validationResult => !validationResult.IsValid)
-            .SelectMany(validationResult => validationResult.Errors)
-            .ToArray();
+            .SelectMany(validationResult => validationResult.Errors)];
 
         return validationFailures;
     }
